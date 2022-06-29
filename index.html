@@ -1,8 +1,206 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-  </head>
-  <body>
-  </body>
+
+<head>
+
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser-arcade-physics.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+</head>
+
+<body>
+
+    <script>
+        var config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: {
+                        y: 200
+                    }
+                }
+            },
+            scene: {
+                preload: preload,
+                create: create
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        console.log(game);
+
+        function preload() {
+            console.log('preload');
+            //this.load.setBaseURL('.');
+            this.load.setBaseURL('http://localhost:3000')
+
+            //this.load.image('sky', 'assets/skies/space3.png');
+            //this.load.image('logo', 'assets/sprites/phaser3-logo.png');
+            //this.load.image('red', 'assets/particles/red.png');
+
+            this.load.spritesheet(
+                'leafy_druid',
+                'assets/leafy_druid_spritesheet_transparent.png', {
+                    frameWidth: 64,
+                    frameHeight: 64
+                });
+            this.load.spritesheet(
+                'fire_wizard',
+                'assets/fire_wizard_spritesheet_transparent.png', {
+                    frameWidth: 64,
+                    frameHeight: 64
+                });
+            // this.load.spritesheet(
+            //     'leafy_druid',
+            //     'https://labs.phaser.io/assets/sprites/metalslug_mummy37x45.png', {
+            //         frameWidth: 64,
+            //         frameHeight: 64
+            //     });
+
+
+
+        }
+
+        function create() {
+
+            var config = {
+                key: 'front',
+                frames: this.anims.generateFrameNumbers('leafy_druid', {
+                    start: 0,
+                    end: 2,
+                    first: 2
+                }),
+                frameRate: 12,
+                repeat: -1
+            };
+
+            this.anims.create(config);
+
+            this.add.sprite(100, 300, 'leafy_druid').play('front');
+
+
+            this.anims.create({
+                key: 'left',
+                frames: this.anims.generateFrameNumbers('leafy_druid', {
+                    frames: [4, 5, 6]
+                }),
+                frameRate: 12,
+                repeat: -1
+            });
+
+            this.add.sprite(175, 300, 'leafy_druid').play('left');
+
+            this.anims.create({
+                key: 'right',
+                frames: this.anims.generateFrameNumbers('leafy_druid', {
+                    frames: [8, 9, 10]
+                }),
+                frameRate: 12,
+                repeat: -1
+            });
+
+            this.add.sprite(250, 300, 'leafy_druid').play('right');
+
+            this.anims.create({
+                key: 'back',
+                frames: this.anims.generateFrameNumbers('leafy_druid', {
+                    frames: [12, 13, 14]
+                }),
+                frameRate: 12,
+                repeat: -1
+            });
+
+            this.add.sprite(325, 300, 'leafy_druid').play('back');
+
+
+            this.anims.create({
+                key: 'front_fire',
+                frames: this.anims.generateFrameNumbers('fire_wizard', {
+                    frames: [0, 1, 2]
+                }),
+                frameRate: 12,
+                repeat: -1
+            });
+
+            this.add.sprite(100, 375, 'fire_wizard').play('front_fire');
+
+
+            this.anims.create({
+                key: 'left_fire',
+                frames: this.anims.generateFrameNumbers('fire_wizard', {
+                    frames: [4, 5, 6]
+                }),
+                frameRate: 12,
+                repeat: -1
+            });
+
+            this.add.sprite(175, 375, 'fire_wizard').play('left_fire');
+
+            this.anims.create({
+                key: 'right_fire',
+                frames: this.anims.generateFrameNumbers('fire_wizard', {
+                    frames: [8, 9, 10]
+                }),
+                frameRate: 12,
+                repeat: -1
+            });
+
+            this.add.sprite(250, 375, 'fire_wizard').play('right_fire');
+
+            this.anims.create({
+                key: 'back_fire',
+                frames: this.anims.generateFrameNumbers('fire_wizard', {
+                    frames: [12, 13, 14]
+                }),
+                frameRate: 12,
+                repeat: -1
+            });
+
+            this.add.sprite(325, 375, 'fire_wizard').play('back_fire');
+
+
+            // mysprite = this.add.sprite(15, 30, 'leafy_druid');
+            // mysprite.frame = 1;
+
+            // var mysprite = this.add.sprite(150, 300, 'leafy_druid');
+            // // mysprite.frame = 1;
+
+            // console.log(mysprite);
+
+            // var left = mysprite.animations.add('left', [0, 1, 2, 3], 10, true);
+            // // mysprite.animations.add('right', [5, 6, 7, 8], 10, true);
+
+            // mysprite.animations.play('left');
+
+
+            // mysprite.animations.stop();
+
+            //this.add.image(400, 300, 'sky');
+
+            //var particles = this.add.particles('red');
+
+            // var emitter = particles.createEmitter({
+            //     speed: 100,
+            //     scale: {
+            //         start: 1,
+            //         end: 0
+            //     },
+            //     blendMode: 'ADD'
+            // });
+
+            // var logo = this.physics.add.image(400, 100, 'logo');
+
+            // logo.setVelocity(100, 200);
+            // logo.setBounce(1, 1);
+            // logo.setCollideWorldBounds(true);
+
+            // emitter.startFollow(logo);
+        }
+    </script>
+
+</body>
+
 </html>
