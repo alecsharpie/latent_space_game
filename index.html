@@ -18,17 +18,21 @@
                 default: 'arcade',
                 arcade: {
                     gravity: {
-                        y: 200
+                        y: 0
                     }
                 }
             },
             scene: {
                 preload: preload,
-                create: create
+                create: create,
+                update: update
             }
         };
 
         var game = new Phaser.Game(config);
+
+        var score = 0;
+        var scoreText;
 
         console.log(game);
 
@@ -37,9 +41,13 @@
             //this.load.setBaseURL('.');
             this.load.setBaseURL('http://localhost:3000')
 
-            //this.load.image('sky', 'assets/skies/space3.png');
+            this.load.image('goal', 'assets/goal.png');
             //this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-            //this.load.image('red', 'assets/particles/red.png');
+            // this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
+            this.load.image('floor_grid', 'assets/volcano_background.png');
+            this.load.image('y_edge', 'assets/y_platform.png');
+            this.load.image('x_edge', 'assets/x_platform.png');
+
 
             this.load.spritesheet(
                 'leafy_druid',
@@ -64,10 +72,27 @@
 
         }
 
+        var platforms;
+
         function create() {
 
+            this.add.image(0, 0, 'floor_grid').setOrigin(0, 0).setScale(1.5);
+
+            scoreText = this.add.text(16, 16, 'score: 0/10', {
+                fontSize: '32px',
+                fill: '#FFF'
+            });
+            //this.bg = this.add.tileSprite(0, 0, 800, 480, 'sheet', 'background.png').setOrigin(0);
+
+            platforms = this.physics.add.staticGroup();
+
+            // platforms.create(0, -96, 'x_edge').setOrigin(0, 0).setScale(2.5).refreshBody();
+            // platforms.create(0, 1000, 'x_edge').setOrigin(0, 0).setScale(2.5).refreshBody();
+            // platforms.create(-96, 0, 'y_edge').setOrigin(0, 0).setScale(2.5).refreshBody();
+            // platforms.create(1000, 0, 'y_edge').setOrigin(0, 0).setScale(2.5).refreshBody();
+
             var config = {
-                key: 'front',
+                key: 'forward',
                 frames: this.anims.generateFrameNumbers('leafy_druid', {
                     start: 0,
                     end: 2,
@@ -79,7 +104,39 @@
 
             this.anims.create(config);
 
-            this.add.sprite(100, 300, 'leafy_druid').play('front');
+            // this.add.sprite(100, 300, 'leafy_druid').play('forward');
+
+            player = this.physics.add.sprite(100, 100, 'fire_wizard');
+            player.setBounce(0.2);
+            player.setCollideWorldBounds(true);
+
+
+            this.physics.add.collider(player, platforms);
+
+            cursors = this.input.keyboard.createCursorKeys();
+
+            if (cursors.up.isDown && player.body.touching.down) {
+                player.setVelocityY(-330);
+            }
+
+
+
+
+            goal = this.physics.add.group({
+                key: 'goal',
+                repeat: 1,
+                setXY: {
+                    x: 200,
+                    y: 200
+                }
+            });
+
+            // this.physics.add.collider(stars, platforms);
+
+            this.physics.add.overlap(player, goal, collectGoal, null, this);
+
+
+
 
 
             this.anims.create({
@@ -91,7 +148,7 @@
                 repeat: -1
             });
 
-            this.add.sprite(175, 300, 'leafy_druid').play('left');
+            // this.add.sprite(175, 300, 'leafy_druid').play('left');
 
             this.anims.create({
                 key: 'right',
@@ -102,7 +159,7 @@
                 repeat: -1
             });
 
-            this.add.sprite(250, 300, 'leafy_druid').play('right');
+            // this.add.sprite(250, 300, 'leafy_druid').play('right');
 
             this.anims.create({
                 key: 'back',
@@ -113,11 +170,20 @@
                 repeat: -1
             });
 
-            this.add.sprite(325, 300, 'leafy_druid').play('back');
+            // this.add.sprite(325, 300, 'leafy_druid').play('back');
+
+            this.anims.create({
+                key: 'turn',
+                frames: this.anims.generateFrameNumbers('leafy_druid', {
+                    frames: [1]
+                }),
+                frameRate: 12
+            });
+
 
 
             this.anims.create({
-                key: 'front_fire',
+                key: 'forward_fire',
                 frames: this.anims.generateFrameNumbers('fire_wizard', {
                     frames: [0, 1, 2]
                 }),
@@ -125,7 +191,7 @@
                 repeat: -1
             });
 
-            this.add.sprite(100, 375, 'fire_wizard').play('front_fire');
+            // this.add.sprite(100, 375, 'fire_wizard').play('forward_fire');
 
 
             this.anims.create({
@@ -137,7 +203,7 @@
                 repeat: -1
             });
 
-            this.add.sprite(175, 375, 'fire_wizard').play('left_fire');
+            // this.add.sprite(175, 375, 'fire_wizard').play('left_fire');
 
             this.anims.create({
                 key: 'right_fire',
@@ -148,7 +214,7 @@
                 repeat: -1
             });
 
-            this.add.sprite(250, 375, 'fire_wizard').play('right_fire');
+            // this.add.sprite(250, 375, 'fire_wizard').play('right_fire');
 
             this.anims.create({
                 key: 'back_fire',
@@ -159,7 +225,15 @@
                 repeat: -1
             });
 
-            this.add.sprite(325, 375, 'fire_wizard').play('back_fire');
+            this.anims.create({
+                key: 'turn_fire',
+                frames: this.anims.generateFrameNumbers('fire_wizard', {
+                    frames: [1]
+                }),
+                frameRate: 12
+            });
+
+            // this.add.sprite(325, 375, 'fire_wizard').play('back_fire');
 
 
             // mysprite = this.add.sprite(15, 30, 'leafy_druid');
@@ -177,8 +251,6 @@
 
 
             // mysprite.animations.stop();
-
-            //this.add.image(400, 300, 'sky');
 
             //var particles = this.add.particles('red');
 
@@ -198,6 +270,37 @@
             // logo.setCollideWorldBounds(true);
 
             // emitter.startFollow(logo);
+        }
+
+        function collectGoal(player, goal) {
+            goal.disableBody(true, true);
+            score += 10;
+            scoreText.setText('Score: ' + score + '/10');
+        }
+
+        function update() {
+            if (cursors.left.isDown) {
+                player.setVelocityX(-160);
+
+                player.anims.play('left_fire', true);
+            } else if (cursors.right.isDown) {
+                player.setVelocityX(160);
+
+                player.anims.play('right_fire', true);
+            } else if (cursors.up.isDown) {
+                player.setVelocityY(-160);
+
+                player.anims.play('back_fire', true);
+            } else if (cursors.down.isDown) {
+                player.setVelocityY(160);
+
+                player.anims.play('forward_fire', true);
+            } else {
+                player.setVelocityX(0);
+                player.setVelocityY(0);
+
+                player.anims.play('turn_fire');
+            }
         }
     </script>
 
