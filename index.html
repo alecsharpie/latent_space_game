@@ -25,7 +25,8 @@
             scene: {
                 preload: preload,
                 create: create,
-                update: update
+                update: update,
+                render: render
             }
         };
 
@@ -43,8 +44,8 @@
 
             this.load.image('goal', 'assets/goal.png');
             //this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-            // this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
-            this.load.image('floor_grid', 'assets/volcano_background.png');
+            this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
+            // this.load.image('floor_grid', 'assets/volcano_background.png');
             this.load.image('y_edge', 'assets/y_platform.png');
             this.load.image('x_edge', 'assets/x_platform.png');
 
@@ -73,10 +74,12 @@
         }
 
         var platforms;
+        var cursors;
+        var player;
 
         function create() {
 
-            this.add.image(0, 0, 'floor_grid').setOrigin(0, 0).setScale(1.5);
+            let bg = this.add.image(0, 0, 'floor_grid').setOrigin(0, 0).setScale(1.5);
 
             scoreText = this.add.text(16, 16, 'score: 0/10', {
                 fontSize: '32px',
@@ -108,19 +111,11 @@
 
             player = this.physics.add.sprite(100, 100, 'fire_wizard');
             player.setBounce(0.2);
-            player.setCollideWorldBounds(true);
-
+            // player.setCollideWorldBounds(true);
 
             this.physics.add.collider(player, platforms);
 
             cursors = this.input.keyboard.createCursorKeys();
-
-            if (cursors.up.isDown && player.body.touching.down) {
-                player.setVelocityY(-330);
-            }
-
-
-
 
             goal = this.physics.add.group({
                 key: 'goal',
@@ -136,7 +131,9 @@
             this.physics.add.overlap(player, goal, collectGoal, null, this);
 
 
+            this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
+            this.cameras.main.startFollow(player);
 
 
             this.anims.create({
@@ -301,6 +298,16 @@
 
                 player.anims.play('turn_fire');
             }
+            //             if (cursors.up.isDown && player.body.touching.down) {
+            //     player.setVelocityY(-330);
+            // }
+        }
+
+        function render() {
+
+            game.debug.cameraInfo(game.camera, 32, 32);
+            game.debug.spriteCoords(player, 32, 500);
+
         }
     </script>
 
