@@ -35,10 +35,26 @@
         var score = 0;
         var scoreText;
 
+        var speed = 500;
+        var speedDiag = Math.round(speed * (1 / 1.44));
+
+        var map_size_pixels = 1000;
+
         console.log(game);
+
+
+        // var json = require('./data.json');
+        // console.log(json)
+
 
         function preload() {
             console.log('preload');
+
+            // this.load.json({
+            //     key: 'map',
+            //     url: 'assets/latent_space_map.json'
+            // });
+
             //this.load.setBaseURL('.');
             this.load.setBaseURL('http://localhost:3000')
 
@@ -46,9 +62,8 @@
             //this.load.image('logo', 'assets/sprites/phaser3-logo.png');
             this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
             // this.load.image('floor_grid', 'assets/volcano_background.png');
-            this.load.image('y_edge', 'assets/y_platform.png');
-            this.load.image('x_edge', 'assets/x_platform.png');
-
+            this.load.image('horz_edge', 'assets/horz_platform_thin.png');
+            this.load.image('vert_edge', 'assets/vert_platform_thin.png');
 
             this.load.spritesheet(
                 'leafy_druid',
@@ -62,15 +77,6 @@
                     frameWidth: 64,
                     frameHeight: 64
                 });
-            // this.load.spritesheet(
-            //     'leafy_druid',
-            //     'https://labs.phaser.io/assets/sprites/metalslug_mummy37x45.png', {
-            //         frameWidth: 64,
-            //         frameHeight: 64
-            //     });
-
-
-
         }
 
         var platforms;
@@ -79,20 +85,28 @@
 
         function create() {
 
-            let bg = this.add.image(0, 0, 'floor_grid').setOrigin(0, 0).setScale(1.5);
+            console.log('creating')
+
+            let bg = this.add.image(0, 0, 'floor_grid').setOrigin(0, 0);
 
             scoreText = this.add.text(16, 16, 'score: 0/10', {
                 fontSize: '32px',
                 fill: '#FFF'
             });
-            //this.bg = this.add.tileSprite(0, 0, 800, 480, 'sheet', 'background.png').setOrigin(0);
 
             platforms = this.physics.add.staticGroup();
 
-            // platforms.create(0, -96, 'x_edge').setOrigin(0, 0).setScale(2.5).refreshBody();
-            // platforms.create(0, 1000, 'x_edge').setOrigin(0, 0).setScale(2.5).refreshBody();
-            // platforms.create(-96, 0, 'y_edge').setOrigin(0, 0).setScale(2.5).refreshBody();
-            // platforms.create(1000, 0, 'y_edge').setOrigin(0, 0).setScale(2.5).refreshBody();
+            let edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0)
+
+
+            t_edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0).setScale(10).refreshBody();
+            // scale = map_size_pixels / edge.displayWidth
+            // long_side = edge.displayWidth * scale
+            // short_side = edge.displayHeight * scale
+            // t_edge
+            b_edge = platforms.create(0, bg.displayWidth - 50, 'horz_edge').setOrigin(0, 0).setScale(10).refreshBody();
+            l_edge = platforms.create(0, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
+            r_edge = platforms.create(bg.displayWidth - 50, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
 
             var config = {
                 key: 'forward',
@@ -117,6 +131,9 @@
 
             cursors = this.input.keyboard.createCursorKeys();
 
+            // var data = this.cache.json.get('map');
+            // console.log(data)
+
             goal = this.physics.add.group({
                 key: 'goal',
                 repeat: 1,
@@ -129,7 +146,6 @@
             // this.physics.add.collider(stars, platforms);
 
             this.physics.add.overlap(player, goal, collectGoal, null, this);
-
 
             this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
@@ -145,8 +161,6 @@
                 repeat: -1
             });
 
-            // this.add.sprite(175, 300, 'leafy_druid').play('left');
-
             this.anims.create({
                 key: 'right',
                 frames: this.anims.generateFrameNumbers('leafy_druid', {
@@ -155,8 +169,6 @@
                 frameRate: 12,
                 repeat: -1
             });
-
-            // this.add.sprite(250, 300, 'leafy_druid').play('right');
 
             this.anims.create({
                 key: 'back',
@@ -167,8 +179,6 @@
                 repeat: -1
             });
 
-            // this.add.sprite(325, 300, 'leafy_druid').play('back');
-
             this.anims.create({
                 key: 'turn',
                 frames: this.anims.generateFrameNumbers('leafy_druid', {
@@ -176,7 +186,6 @@
                 }),
                 frameRate: 12
             });
-
 
 
             this.anims.create({
@@ -188,9 +197,6 @@
                 repeat: -1
             });
 
-            // this.add.sprite(100, 375, 'fire_wizard').play('forward_fire');
-
-
             this.anims.create({
                 key: 'left_fire',
                 frames: this.anims.generateFrameNumbers('fire_wizard', {
@@ -200,8 +206,6 @@
                 repeat: -1
             });
 
-            // this.add.sprite(175, 375, 'fire_wizard').play('left_fire');
-
             this.anims.create({
                 key: 'right_fire',
                 frames: this.anims.generateFrameNumbers('fire_wizard', {
@@ -210,8 +214,6 @@
                 frameRate: 12,
                 repeat: -1
             });
-
-            // this.add.sprite(250, 375, 'fire_wizard').play('right_fire');
 
             this.anims.create({
                 key: 'back_fire',
@@ -229,44 +231,6 @@
                 }),
                 frameRate: 12
             });
-
-            // this.add.sprite(325, 375, 'fire_wizard').play('back_fire');
-
-
-            // mysprite = this.add.sprite(15, 30, 'leafy_druid');
-            // mysprite.frame = 1;
-
-            // var mysprite = this.add.sprite(150, 300, 'leafy_druid');
-            // // mysprite.frame = 1;
-
-            // console.log(mysprite);
-
-            // var left = mysprite.animations.add('left', [0, 1, 2, 3], 10, true);
-            // // mysprite.animations.add('right', [5, 6, 7, 8], 10, true);
-
-            // mysprite.animations.play('left');
-
-
-            // mysprite.animations.stop();
-
-            //var particles = this.add.particles('red');
-
-            // var emitter = particles.createEmitter({
-            //     speed: 100,
-            //     scale: {
-            //         start: 1,
-            //         end: 0
-            //     },
-            //     blendMode: 'ADD'
-            // });
-
-            // var logo = this.physics.add.image(400, 100, 'logo');
-
-            // logo.setVelocity(100, 200);
-            // logo.setBounce(1, 1);
-            // logo.setCollideWorldBounds(true);
-
-            // emitter.startFollow(logo);
         }
 
         function collectGoal(player, goal) {
@@ -276,31 +240,61 @@
         }
 
         function update() {
+
+            player.body.setVelocity(0);
+
+            //  Horizontal Movement
+
             if (cursors.left.isDown) {
-                player.setVelocityX(-160);
 
+                player.setVelocityX(-speed);
                 player.anims.play('left_fire', true);
-            } else if (cursors.right.isDown) {
-                player.setVelocityX(160);
+            }
 
+            if (cursors.right.isDown) {
+                player.setVelocityX(speed);
                 player.anims.play('right_fire', true);
-            } else if (cursors.up.isDown) {
-                player.setVelocityY(-160);
+            }
+
+            //  Vertical Movement
+
+            if (cursors.up.isDown) {
+                player.setVelocityY(-speed);
 
                 player.anims.play('back_fire', true);
-            } else if (cursors.down.isDown) {
-                player.setVelocityY(160);
+            }
+
+            if (cursors.down.isDown) {
+                player.setVelocityY(speed);
 
                 player.anims.play('forward_fire', true);
-            } else {
-                player.setVelocityX(0);
-                player.setVelocityY(0);
-
-                player.anims.play('turn_fire');
             }
-            //             if (cursors.up.isDown && player.body.touching.down) {
-            //     player.setVelocityY(-330);
-            // }
+
+            // Diagonal movement
+            // Up and left
+
+            if (cursors.left.isDown && cursors.up.isDown) {
+                player.setVelocityX(-speedDiag);
+                player.setVelocityY(-speedDiag);
+            }
+
+            // Up and right
+            if (cursors.right.isDown && cursors.up.isDown) {
+                player.setVelocityX(speedDiag);
+                player.setVelocityY(-speedDiag);
+            }
+
+            // Down and right
+            if (cursors.right.isDown && cursors.down.isDown) {
+                player.setVelocityX(speedDiag);
+                player.setVelocityY(speedDiag);
+            }
+
+            // Down and left
+            if (cursors.left.isDown && cursors.down.isDown) {
+                player.setVelocityX(-speedDiag);
+                player.setVelocityY(speedDiag);
+            }
         }
 
         function render() {
