@@ -50,10 +50,10 @@
         function preload() {
             console.log('preload');
 
-            // this.load.json({
-            //     key: 'map',
-            //     url: 'assets/latent_space_map.json'
-            // });
+            this.load.json({
+                key: 'map',
+                url: 'assets/latent_space_map.json'
+            });
 
             //this.load.setBaseURL('.');
             this.load.setBaseURL('http://localhost:3000')
@@ -82,6 +82,10 @@
         var platforms;
         var cursors;
         var player;
+        var x_start_point = 500;
+        var y_start_point = 500;
+
+        var name_of_sprite = 'fire_wizard';
 
         function create() {
 
@@ -108,31 +112,16 @@
             l_edge = platforms.create(0, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
             r_edge = platforms.create(bg.displayWidth - 50, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
 
-            var config = {
-                key: 'forward',
-                frames: this.anims.generateFrameNumbers('leafy_druid', {
-                    start: 0,
-                    end: 2,
-                    first: 2
-                }),
-                frameRate: 12,
-                repeat: -1
-            };
-
-            this.anims.create(config);
-
-            // this.add.sprite(100, 300, 'leafy_druid').play('forward');
-
-            player = this.physics.add.sprite(100, 100, 'fire_wizard');
-            player.setBounce(0.2);
+            player = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite);
+            // player.setBounce(0.2);
             // player.setCollideWorldBounds(true);
 
             this.physics.add.collider(player, platforms);
 
             cursors = this.input.keyboard.createCursorKeys();
 
-            // var data = this.cache.json.get('map');
-            // console.log(data)
+            var data = this.cache.json.get('map');
+            console.log(data)
 
             goal = this.physics.add.group({
                 key: 'goal',
@@ -151,6 +140,14 @@
 
             this.cameras.main.startFollow(player);
 
+            this.anims.create({
+                key: 'forward',
+                frames: this.anims.generateFrameNumbers('leafy_druid', {
+                    frames: [0, 1, 2]
+                }),
+                frameRate: 12,
+                repeat: -1
+            });
 
             this.anims.create({
                 key: 'left',
@@ -186,7 +183,6 @@
                 }),
                 frameRate: 12
             });
-
 
             this.anims.create({
                 key: 'forward_fire',
