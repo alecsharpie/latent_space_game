@@ -46,19 +46,61 @@
         // var json = require('./data.json');
         // console.log(json)
 
+        async function getMap() {
+            let map_path = "http://localhost:3000/assets/latent_space_map.json";
+
+            try {
+                let res = await fetch(map_path);
+                return await res.json();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
 
         function preload() {
+
             console.log('preload');
+
+            this.load.setBaseURL('http://localhost:3000')
 
             this.load.json({
                 key: 'map',
                 url: 'assets/latent_space_map.json'
             });
 
+
+            // getMap().then(console.log(json_data))
+            let map_path = "http://localhost:3000/assets/latent_space_map.json";
+
+            fetch(map_path)
+                .then(response => {
+                    return response.json();
+                })
+                .then(jsondata => {
+                    for (var i = 0; i < jsondata['image_paths'].length; i++) {
+                        let image_path = "http://localhost:3000/assets/images/" + jsondata['image_paths'][i];
+                        this.load.image('goal' + i, image_path);
+                    }
+                });
+
+
+            // data = this.cache.json.get('map');
+
+            // var image_paths = data['image_paths'];
+
+            // console.log(data);
+
+            // var numbers = [10, 20, 30, 40, 50]
+            // for (var i = 0; i < image_paths.length; i++) {
+            //     console.log("assets/" + image_paths[i]);
+            // }
+
+
             //this.load.setBaseURL('.');
-            this.load.setBaseURL('http://localhost:3000')
 
             this.load.image('goal', 'assets/goal.png');
+            this.load.image('logo', 'assets/logo.png');
             //this.load.image('logo', 'assets/sprites/phaser3-logo.png');
             this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
             // this.load.image('floor_grid', 'assets/volcano_background.png');
@@ -91,7 +133,19 @@
 
             console.log('creating')
 
+            // Background
+
+            this.add.tileSprite(0, 0, 800, 600, 'logo')
+
             let bg = this.add.image(0, 0, 'floor_grid').setOrigin(0, 0);
+
+            var container = this.add.container(400, 300).setName('conty');
+
+            ts = this.add.tileSprite(0, 0, 400, 600, 'mushroom').setName('tiley');
+            container.add(ts);
+
+            var image = this.add.image(0, 0, 'mushroom').setName('mushy').setScale(4);
+            container.add(image);
 
             scoreText = this.add.text(16, 16, 'score: 0/10', {
                 fontSize: '32px',
@@ -121,7 +175,13 @@
             cursors = this.input.keyboard.createCursorKeys();
 
             var data = this.cache.json.get('map');
-            console.log(data)
+
+            console.log(data['X_coords'])
+
+            var numbers = [10, 20, 30, 40, 50]
+            for (var i = 0; i < numbers.length; i++) {
+                console.log(numbers[i])
+            }
 
             goal = this.physics.add.group({
                 key: 'goal',
@@ -136,9 +196,13 @@
 
             this.physics.add.overlap(player, goal, collectGoal, null, this);
 
+            // Camera
+
             this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
             this.cameras.main.startFollow(player);
+
+
 
             this.anims.create({
                 key: 'forward',
