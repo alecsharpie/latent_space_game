@@ -80,28 +80,13 @@
                 .then(jsondata => {
                     for (var i = 0; i < jsondata['image_paths'].length; i++) {
                         let image_path = "http://localhost:3000/assets/images/" + jsondata['image_paths'][i];
-                        this.load.image('goal' + i, image_path);
+                        this.load.image('signpost' + i, image_path);
                     }
                 });
 
-
-            // data = this.cache.json.get('map');
-
-            // var image_paths = data['image_paths'];
-
-            // console.log(data);
-
-            // var numbers = [10, 20, 30, 40, 50]
-            // for (var i = 0; i < image_paths.length; i++) {
-            //     console.log("assets/" + image_paths[i]);
-            // }
-
-
-            //this.load.setBaseURL('.');
-
             this.load.image('goal', 'assets/goal.png');
             this.load.image('logo', 'assets/logo.png');
-            //this.load.image('logo', 'assets/sprites/phaser3-logo.png');
+            this.load.image('background', 'assets/underwater_background.png');
             this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
             // this.load.image('floor_grid', 'assets/volcano_background.png');
             this.load.image('horz_edge', 'assets/horz_platform_thin.png');
@@ -135,22 +120,41 @@
 
             // Background
 
-            this.add.tileSprite(0, 0, 800, 600, 'logo')
+            let bg = this.add.tileSprite(0, 0, 5000, 5000, 'background').setScrollFactor(0.5)
 
-            let bg = this.add.image(0, 0, 'floor_grid').setOrigin(0, 0);
+            // Signposts
 
-            var container = this.add.container(400, 300).setName('conty');
+            signposts = this.physics.add.staticGroup();
 
-            ts = this.add.tileSprite(0, 0, 400, 600, 'mushroom').setName('tiley');
-            container.add(ts);
+            let map_path = "http://localhost:3000/assets/latent_space_map.json";
 
-            var image = this.add.image(0, 0, 'mushroom').setName('mushy').setScale(4);
-            container.add(image);
+            fetch(map_path)
+                .then(response => {
+                    return response.json();
+                })
+                .then(jsondata => {
+                    for (var i = 0; i < jsondata['image_paths'].length; i++) {
+                        signposts.create(jsondata['X_coords'][i], jsondata['Y_coords'][i], 'signpost' + i).setOrigin(0, 0);
+                    }
+                });
+
+            //Goal
+
+            goal = this.physics.add.group({
+                key: 'logo',
+                repeat: 1,
+                setXY: {
+                    x: 200,
+                    y: 200
+                }
+            });
 
             scoreText = this.add.text(16, 16, 'score: 0/10', {
                 fontSize: '32px',
                 fill: '#FFF'
             });
+
+            //Edges
 
             platforms = this.physics.add.staticGroup();
 
@@ -167,32 +171,10 @@
             r_edge = platforms.create(bg.displayWidth - 50, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
 
             player = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite);
-            // player.setBounce(0.2);
-            // player.setCollideWorldBounds(true);
 
             this.physics.add.collider(player, platforms);
 
             cursors = this.input.keyboard.createCursorKeys();
-
-            var data = this.cache.json.get('map');
-
-            console.log(data['X_coords'])
-
-            var numbers = [10, 20, 30, 40, 50]
-            for (var i = 0; i < numbers.length; i++) {
-                console.log(numbers[i])
-            }
-
-            goal = this.physics.add.group({
-                key: 'goal',
-                repeat: 1,
-                setXY: {
-                    x: 200,
-                    y: 200
-                }
-            });
-
-            // this.physics.add.collider(stars, platforms);
 
             this.physics.add.overlap(player, goal, collectGoal, null, this);
 
@@ -202,7 +184,7 @@
 
             this.cameras.main.startFollow(player);
 
-
+            // Animations
 
             this.anims.create({
                 key: 'forward',
