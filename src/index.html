@@ -42,30 +42,36 @@
 
         console.log(game);
 
-        async function fetchMap(map_path) {
-            try {
-                const response = await fetch(`${map_path}`);
-                const exam = await response.json();
-                return exam;
-            } catch (error) {
-                console.error(error);
-            }
+        // async function fetchMap(map_path) {
+        //     try {
+        //         const response = await fetch(`${map_path}`);
+        //         const exam = await response.json();
+        //         return exam;
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+        // }
+
+        function collectGoal(player, goal) {
+            goal.disableBody(true, true);
+            score += 10;
+            scoreText.setText('Score: ' + score + '/10');
         }
 
 
         // var json = require('./data.json');
         // console.log(json)
 
-        async function getMap() {
-            let map_path = "http://localhost:3000/assets/latent_space_map.json";
+        // async function getMap() {
+        //     let map_path = "http://localhost:3000/assets/latent_space_map.json";
 
-            try {
-                let res = await fetch(map_path);
-                return await res.json();
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        //     try {
+        //         let res = await fetch(map_path);
+        //         return await res.json();
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
 
 
         function preload() {
@@ -139,7 +145,7 @@
 
             this.load.image('goal', 'assets/goal.png');
             this.load.image('logo', 'assets/logo.png');
-            this.load.image('background', 'assets/pad_background_100_256bit.png');
+            this.load.image('background', 'assets/latent_space_background_8bit.png');
             this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
             // this.load.image('floor_grid', 'assets/volcano_background.png');
             this.load.image('horz_edge', 'assets/horz_platform_thin.png');
@@ -179,46 +185,26 @@
 
             signposts = this.physics.add.staticGroup();
 
+            let map_data = JSON.parse(sessionStorage.getItem("data"))
 
-            let data = JSON.parse(sessionStorage.getItem("data"))
-
-            console.log(data['X_coords'][0])
+            // console.log(map_data['X_coords'][0])
 
             let map_path = "http://localhost:3000/assets/latent_space_map.json";
 
-            fetch(map_path)
-                .then(response => {
-                    return response.json();
-                })
-                .then(jsondata => {
-                    for (var i = 0; i < jsondata['image_paths'].length; i++) {
-                        signposts.create(jsondata['X_coords'][i], jsondata['Y_coords'][i], 'signpost' + i).setOrigin(0, 0);
-                    }
-                });
+            for (var i = 0; i < map_data['image_paths'].length; i++) {
+                signposts.create(map_data['X_coords'][i], map_data['Y_coords'][i], 'signpost' + i).setOrigin(0, 0);
+            }
 
-            this.physics.add.overlap(player, goal, collectGoal, null, this);
+            console.log("after signpost loop")
 
-
-
-            //Goal
-
-
-            goal = this.physics.add.group({
-                key: 'logo',
-                repeat: 1,
-                setXY: {
-                    x: 200,
-                    y: 200
-                }
-            });
-
-            this.physics.add.overlap(player, goal, collectGoal, null, this);
-
+            // this.physics.add.overlap(player, goal, collectGoal, null, this);
 
             scoreText = this.add.text(16, 16, 'score: 0/10', {
                 fontSize: '32px',
                 fill: '#FFF'
             });
+
+            console.log("after goal")
 
             //Edges
 
@@ -236,11 +222,33 @@
             l_edge = platforms.create(0, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
             r_edge = platforms.create(bg.displayWidth - 50, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
 
+
+            console.log("after platforms")
+
+            // Player & Cursor
+
             player = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite);
 
             this.physics.add.collider(player, platforms);
 
             cursors = this.input.keyboard.createCursorKeys();
+
+            console.log("after player")
+
+
+            //Goal
+
+            goal = this.physics.add.group({
+                key: 'logo',
+                repeat: 1,
+                setXY: {
+                    x: 200,
+                    y: 200
+                }
+            });
+
+            this.physics.add.overlap(player, goal, collectGoal, null, this);
+
 
             // Caption Text
             var style = {
@@ -260,6 +268,8 @@
             this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
             this.cameras.main.startFollow(player);
+
+            console.log("after camera")
 
             // Animations
 
@@ -350,12 +360,8 @@
                 }),
                 frameRate: 12
             });
-        }
 
-        function collectGoal(player, goal) {
-            goal.disableBody(true, true);
-            score += 10;
-            scoreText.setText('Score: ' + score + '/10');
+            console.log("Game Created")
         }
 
         function update() {
@@ -417,12 +423,13 @@
 
             text.x = Math.floor((player.x + player.width / 2) - 100);
             text.y = Math.floor((player.y + player.height / 2) + 100);
+
         }
 
         function render() {
 
-            game.debug.cameraInfo(game.camera, 32, 32);
-            game.debug.spriteCoords(player, 32, 500);
+            this.debug.cameraInfo(this.camera, 32, 32);
+            this.debug.spriteCoords(player, 32, 500);
 
         }
     </script>
