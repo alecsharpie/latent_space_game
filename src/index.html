@@ -42,6 +42,16 @@
 
         console.log(game);
 
+        async function fetchMap(map_path) {
+            try {
+                const response = await fetch(`${map_path}`);
+                const exam = await response.json();
+                return exam;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
 
         // var json = require('./data.json');
         // console.log(json)
@@ -73,20 +83,63 @@
             // getMap().then(console.log(json_data))
             let map_path = "http://localhost:3000/assets/latent_space_map.json";
 
+            // fetch(map_path)
+            //     .then(response => {
+            //         return response.json();
+            //     })
+            //     .then(jsondata => {
+            //         for (var i = 0; i < jsondata['image_paths'].length; i++) {
+            //             let image_path = "http://localhost:3000/assets/images/" + jsondata['image_paths'][i];
+            //             this.load.image('signpost' + i, image_path);
+            //         }
+            //     });
+
+            // async function renderExam(id) {
+            //     const exam = await fetchExam(id);
+            //     console.log(exam);
+            // }
+
+            // var jsondata = fetchMap(map_path);
+
+            // console.log(jsondata);
+
+            // if (sessionStorage.getItem("data") == null) {
             fetch(map_path)
-                .then(response => {
-                    return response.json();
+                .then(function(resp) {
+                    return resp.json()
                 })
-                .then(jsondata => {
-                    for (var i = 0; i < jsondata['image_paths'].length; i++) {
-                        let image_path = "http://localhost:3000/assets/images/" + jsondata['image_paths'][i];
-                        this.load.image('signpost' + i, image_path);
-                    }
-                });
+                .then(function(data) {
+                    // APIresults(data);
+                    sessionStorage.setItem("data", JSON.stringify(data));
+                    console.log('set session storage')
+                })
+                .catch(function() {});
+
+            // }
+
+            // console.log(jsondata);
+            // This first part seems to works - now second part when user already have data in sessionstorage
+            // else if (sessionStorage.getItem("data") != null) {
+            //     let data = JSON.parse(sessionStorage.getItem("data")); // just added JSON.Parse method.
+
+            //     function workingresults(data) {
+            //         APIresults(data);
+            //     };
+
+            // }
+
+            let data = JSON.parse(sessionStorage.getItem("data"))
+
+            console.log(data['X_coords'])
+
+            for (var i = 0; i < data['image_paths'].length; i++) {
+                let image_path = "http://localhost:3000/assets/images/" + data['image_paths'][i];
+                this.load.image('signpost' + i, image_path);
+            }
 
             this.load.image('goal', 'assets/goal.png');
             this.load.image('logo', 'assets/logo.png');
-            this.load.image('background', 'assets/underwater_background.png');
+            this.load.image('background', 'assets/pad_background_100_256bit.png');
             this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
             // this.load.image('floor_grid', 'assets/volcano_background.png');
             this.load.image('horz_edge', 'assets/horz_platform_thin.png');
@@ -120,11 +173,16 @@
 
             // Background
 
-            let bg = this.add.tileSprite(0, 0, 5000, 5000, 'background').setScrollFactor(0.5)
+            let bg = this.add.tileSprite(0, 0, 10000, 10000, 'background').setScrollFactor(0.5)
 
             // Signposts
 
             signposts = this.physics.add.staticGroup();
+
+
+            let data = JSON.parse(sessionStorage.getItem("data"))
+
+            console.log(data['X_coords'][0])
 
             let map_path = "http://localhost:3000/assets/latent_space_map.json";
 
@@ -138,7 +196,12 @@
                     }
                 });
 
+            this.physics.add.overlap(player, goal, collectGoal, null, this);
+
+
+
             //Goal
+
 
             goal = this.physics.add.group({
                 key: 'logo',
@@ -148,6 +211,9 @@
                     y: 200
                 }
             });
+
+            this.physics.add.overlap(player, goal, collectGoal, null, this);
+
 
             scoreText = this.add.text(16, 16, 'score: 0/10', {
                 fontSize: '32px',
@@ -176,7 +242,18 @@
 
             cursors = this.input.keyboard.createCursorKeys();
 
-            this.physics.add.overlap(player, goal, collectGoal, null, this);
+            // Caption Text
+            var style = {
+                font: "32px Arial",
+                fill: "#ff0044",
+                wordWrap: true,
+                wordWrapWidth: 300,
+                align: "center",
+                backgroundColor: "#ffff00"
+            };
+
+            text = this.add.text(0, 0, "- text on a sprite -\ndrag me", style);
+            // text.anchor.set(0.5);
 
             // Camera
 
@@ -337,6 +414,9 @@
                 player.setVelocityX(-speedDiag);
                 player.setVelocityY(speedDiag);
             }
+
+            text.x = Math.floor((player.x + player.width / 2) - 100);
+            text.y = Math.floor((player.y + player.height / 2) + 100);
         }
 
         function render() {
