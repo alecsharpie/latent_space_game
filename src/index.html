@@ -181,23 +181,62 @@
 
             let bg = this.add.tileSprite(0, 0, 10000, 10000, 'background').setScrollFactor(0.5)
 
+            // Player & Cursor
+
+            player = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite);
+
+            this.physics.add.collider(player, platforms);
+
+            cursors = this.input.keyboard.createCursorKeys();
+
+            console.log("after player")
+
+            // Caption Text
+            var style = {
+                font: "32px Arial",
+                fill: "#ffffff",
+                wordWrap: true,
+                wordWrapWidth: 300,
+                align: "center",
+                backgroundColor: "#00000"
+            };
+
+            text = this.add.text(((player.x + player.width / 2) - 100), ((player.y + player.height / 2) + 100), "caption", style);
+            // text.anchor.set(0.5);
+
             // Signposts
 
             signposts = this.physics.add.staticGroup();
 
             let map_data = JSON.parse(sessionStorage.getItem("data"))
 
+            // var function_array = [];
+            // for (var i = 0; i < 10; ++i)
+            //     function_array[function_array.length] = (function(i) {
+            //         return function() {
+            //             return i;
+            //         }
+            //     });
+
             // console.log(map_data['X_coords'][0])
 
             let map_path = "http://localhost:3000/assets/latent_space_map.json";
 
             for (var i = 0; i < map_data['image_paths'].length; i++) {
-                signposts.create(map_data['X_coords'][i], map_data['Y_coords'][i], 'signpost' + i).setOrigin(0, 0);
+                let sp = signposts.create(map_data['X_coords'][i], map_data['Y_coords'][i], 'signpost' + i).setOrigin(0, 0);
+
+                function displayCaption(player, sp) {
+
+                    this.add.text(((player.x + player.width / 2) - 100), ((player.y + player.height / 2) + 100), map_data['image_paths'][i])
+
+                    // text.setText(map_data['image_paths'][i])
+
+                }
+                this.physics.add.overlap(player, sp, displayCaption, null, this);
             }
 
             console.log("after signpost loop")
 
-            // this.physics.add.overlap(player, goal, collectGoal, null, this);
 
             scoreText = this.add.text(16, 16, 'score: 0/10', {
                 fontSize: '32px',
@@ -225,16 +264,6 @@
 
             console.log("after platforms")
 
-            // Player & Cursor
-
-            player = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite);
-
-            this.physics.add.collider(player, platforms);
-
-            cursors = this.input.keyboard.createCursorKeys();
-
-            console.log("after player")
-
 
             //Goal
 
@@ -249,19 +278,6 @@
 
             this.physics.add.overlap(player, goal, collectGoal, null, this);
 
-
-            // Caption Text
-            var style = {
-                font: "32px Arial",
-                fill: "#ff0044",
-                wordWrap: true,
-                wordWrapWidth: 300,
-                align: "center",
-                backgroundColor: "#ffff00"
-            };
-
-            text = this.add.text(0, 0, "- text on a sprite -\ndrag me", style);
-            // text.anchor.set(0.5);
 
             // Camera
 
