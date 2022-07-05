@@ -139,7 +139,7 @@
             console.log(data['X_coords'])
 
             for (var i = 0; i < data['image_paths'].length; i++) {
-                let image_path = "http://localhost:3000/assets/images/" + data['image_paths'][i];
+                let image_path = "http://localhost:3000/assets/images_simple/" + data['image_paths'][i];
                 this.load.image('signpost' + i, image_path);
             }
 
@@ -148,8 +148,8 @@
             this.load.image('background', 'assets/latent_space_background_8bit.png');
             this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
             // this.load.image('floor_grid', 'assets/volcano_background.png');
-            this.load.image('horz_edge', 'assets/horz_platform_thin.png');
-            this.load.image('vert_edge', 'assets/vert_platform_thin.png');
+            // this.load.image('horz_edge', 'assets/horz_platform_thin.png');
+            // this.load.image('vert_edge', 'assets/vert_platform_thin.png');
 
             this.load.spritesheet(
                 'leafy_druid',
@@ -165,7 +165,7 @@
                 });
         }
 
-        var platforms;
+        // var platforms;
         var cursors;
         var player;
         var x_start_point = 500;
@@ -185,7 +185,9 @@
 
             player = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite);
 
-            this.physics.add.collider(player, platforms);
+            // this.physics.add.collider(player, platforms);
+
+            player.body.setCollideWorldBounds(true);
 
             cursors = this.input.keyboard.createCursorKeys();
 
@@ -225,14 +227,14 @@
             for (var i = 0; i < map_data['image_paths'].length; i++) {
                 let sp = signposts.create(map_data['X_coords'][i], map_data['Y_coords'][i], 'signpost' + i).setOrigin(0, 0);
 
-                function displayCaption(player, sp) {
+                // function displayCaption(player, sp) {
 
-                    this.add.text(((player.x + player.width / 2) - 100), ((player.y + player.height / 2) + 100), map_data['image_paths'][i])
+                //     this.add.text(((player.x + player.width / 2) - 100), ((player.y + player.height / 2) + 100), map_data['image_paths'][i])
 
-                    // text.setText(map_data['image_paths'][i])
+                //     // text.setText(map_data['image_paths'][i])
 
-                }
-                this.physics.add.overlap(player, sp, displayCaption, null, this);
+                // }
+                // this.physics.add.overlap(player, sp, displayCaption, null, this);
             }
 
             console.log("after signpost loop")
@@ -247,22 +249,24 @@
 
             //Edges
 
-            platforms = this.physics.add.staticGroup();
+            this.physics.world.setBounds(0, 0, bg.displayWidth, bg.displayHeight, true, true, true, false);
 
-            let edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0)
+            // platforms = this.physics.add.staticGroup();
 
-
-            t_edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0).setScale(10).refreshBody();
-            // scale = map_size_pixels / edge.displayWidth
-            // long_side = edge.displayWidth * scale
-            // short_side = edge.displayHeight * scale
-            // t_edge
-            b_edge = platforms.create(0, bg.displayWidth - 50, 'horz_edge').setOrigin(0, 0).setScale(10).refreshBody();
-            l_edge = platforms.create(0, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
-            r_edge = platforms.create(bg.displayWidth - 50, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
+            // let edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0)
 
 
-            console.log("after platforms")
+            // t_edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0).setScale(10).refreshBody();
+            // // scale = map_size_pixels / edge.displayWidth
+            // // long_side = edge.displayWidth * scale
+            // // short_side = edge.displayHeight * scale
+            // // t_edge
+            // b_edge = platforms.create(0, bg.displayWidth - 50, 'horz_edge').setOrigin(0, 0).setScale(10).refreshBody();
+            // l_edge = platforms.create(0, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
+            // r_edge = platforms.create(bg.displayWidth - 50, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
+
+
+            // console.log("after platforms")
 
 
             //Goal
