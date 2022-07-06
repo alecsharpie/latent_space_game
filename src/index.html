@@ -12,8 +12,8 @@
     <script>
         var config = {
             type: Phaser.AUTO,
-            width: 800,
-            height: 600,
+            width: 1000,
+            height: 700,
             physics: {
                 default: 'arcade',
                 arcade: {
@@ -34,6 +34,7 @@
 
         var score = 0;
         var scoreText;
+        var clueText;
 
         var speed = 500;
         var speedDiag = Math.round(speed * (1 / 1.44));
@@ -52,10 +53,29 @@
         //     }
         // }
 
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
         function collectGoal(player, goal) {
             goal.disableBody(true, true);
-            score += 10;
-            scoreText.setText('Score: ' + score + '/10');
+            score += 1;
+            scoreText.setText('Score: ' + score + '/inf');
+            let map_data = JSON.parse(sessionStorage.getItem("data"))
+            let rand_int = getRandomInt(map_data['image_paths'].length)
+            console.log(rand_int)
+            clueText.setText(map_data['image_paths'][rand_int].replace(".png", "").replace(/_/g, " "))
+            goal = this.physics.add.group({
+                key: 'goal',
+                repeat: 1,
+                setXY: {
+                    x: map_data['X_coords'][rand_int],
+                    y: map_data['Y_coords'][rand_int]
+                }
+            });
+
+            this.physics.add.overlap(player, goal, collectGoal, null, this);
+
         }
 
 
@@ -87,7 +107,6 @@
 
 
             // getMap().then(console.log(json_data))
-            let map_path = "http://localhost:3000/assets/latent_space_map.json";
 
             // fetch(map_path)
             //     .then(response => {
@@ -110,6 +129,9 @@
             // console.log(jsondata);
 
             // if (sessionStorage.getItem("data") == null) {
+
+            let map_path = "http://localhost:3000/assets/latent_space_map.json";
+
             fetch(map_path)
                 .then(function(resp) {
                     return resp.json()
@@ -144,9 +166,9 @@
             }
 
             this.load.image('goal', 'assets/goal.png');
-            this.load.image('logo', 'assets/logo.png');
+            // this.load.image('logo', 'assets/logo.png');
             this.load.image('background', 'assets/latent_space_background_8bit.png');
-            this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
+            // this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
             // this.load.image('floor_grid', 'assets/volcano_background.png');
             // this.load.image('horz_edge', 'assets/horz_platform_thin.png');
             // this.load.image('vert_edge', 'assets/vert_platform_thin.png');
@@ -175,15 +197,35 @@
 
         function create() {
 
-            console.log('creating')
+            console.log('Getting Map data')
+
+            let map_data = JSON.parse(sessionStorage.getItem("data"))
+
+
+            console.log('Creating game')
 
             // Background
 
-            let bg = this.add.tileSprite(0, 0, 10000, 10000, 'background').setScrollFactor(0.5)
+            let bg = this.add.tileSprite(0, 0, 10000, 10000, 'background').setScrollFactor(0.3);
+
+            // Signposts
+
+            signposts = this.physics.add.staticGroup();
+
+            for (var i = 0; i < map_data['image_paths'].length; i++) {
+                let sp = signposts.create(map_data['X_coords'][i], map_data['Y_coords'][i], 'signpost' + i).setOrigin(0, 0);
+            }
+
+            console.log("after signpost loop")
 
             // Player & Cursor
 
-            player = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite);
+            player = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite).setScale(1);
+
+            // player_map = this.add.image(x_start_point, x_start_point, name_of_sprite).setScale(3);
+
+
+            // this.player_map.startFollow(player);
 
             // this.physics.add.collider(player, platforms);
 
@@ -198,54 +240,29 @@
                 font: "32px Arial",
                 fill: "#ffffff",
                 wordWrap: true,
-                wordWrapWidth: 300,
+                wordWrapWidth: 100,
                 align: "center",
                 backgroundColor: "#00000"
             };
 
-            text = this.add.text(((player.x + player.width / 2) - 100), ((player.y + player.height / 2) + 100), "caption", style);
-            // text.anchor.set(0.5);
+            // Clue & Goal
+            clueText = this.add.text(0, 0, "", style);
 
-            // Signposts
+            let rand_int = getRandomInt(map_data['image_paths'].length)
+            clueText.setText(map_data['image_paths'][rand_int].replace(".png", "").replace(/_/g, " "))
+            goal = this.physics.add.group({
+                key: 'goal',
+                repeat: 1,
+                setXY: {
+                    x: map_data['X_coords'][rand_int],
+                    y: map_data['Y_coords'][rand_int]
+                }
+            })
 
-            signposts = this.physics.add.staticGroup();
+            this.physics.add.overlap(player, goal, collectGoal, null, this);
 
-            let map_data = JSON.parse(sessionStorage.getItem("data"))
+            scoreText = this.add.text(0, 0, 'score: 0/10', style);
 
-            // var function_array = [];
-            // for (var i = 0; i < 10; ++i)
-            //     function_array[function_array.length] = (function(i) {
-            //         return function() {
-            //             return i;
-            //         }
-            //     });
-
-            // console.log(map_data['X_coords'][0])
-
-            let map_path = "http://localhost:3000/assets/latent_space_map.json";
-
-            for (var i = 0; i < map_data['image_paths'].length; i++) {
-                let sp = signposts.create(map_data['X_coords'][i], map_data['Y_coords'][i], 'signpost' + i).setOrigin(0, 0);
-
-                // function displayCaption(player, sp) {
-
-                //     this.add.text(((player.x + player.width / 2) - 100), ((player.y + player.height / 2) + 100), map_data['image_paths'][i])
-
-                //     // text.setText(map_data['image_paths'][i])
-
-                // }
-                // this.physics.add.overlap(player, sp, displayCaption, null, this);
-            }
-
-            console.log("after signpost loop")
-
-
-            scoreText = this.add.text(16, 16, 'score: 0/10', {
-                fontSize: '32px',
-                fill: '#FFF'
-            });
-
-            console.log("after goal")
 
             //Edges
 
@@ -271,16 +288,20 @@
 
             //Goal
 
-            goal = this.physics.add.group({
-                key: 'logo',
-                repeat: 1,
-                setXY: {
-                    x: 200,
-                    y: 200
-                }
-            });
+            // goal = this.physics.add.group({
+            //     key: 'goal',
+            //     repeat: 1,
+            //     setXY: {
+            //         x: 200,
+            //         y: 200
+            //     }
+            // });
 
-            this.physics.add.overlap(player, goal, collectGoal, null, this);
+            //  {
+            //     fontSize: '32px',
+            //     fill: '#FFF'
+            // }
+            console.log("after goal")
 
 
             // Camera
@@ -289,7 +310,25 @@
 
             this.cameras.main.startFollow(player);
 
+            player_map = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite).setScale(10);
+
+            this.cameras.main.ignore(player_map);
+
             console.log("after camera")
+
+
+            //  The miniCam
+            this.minimap = this.cameras.add(695, 5, 300, 300).setZoom(0.03).setName('mini');
+            this.minimap.setBackgroundColor(0x002244);
+            this.minimap.scrollX = bg.displayWidth / 2;
+            this.minimap.scrollY = bg.displayWidth / 2;
+            this.minimap.ignore(bg);
+            this.minimap.ignore(scoreText);
+            this.minimap.ignore(clueText);
+            this.minimap.ignore(player);
+
+
+            console.log("after mini-camera")
 
             // Animations
 
@@ -441,15 +480,27 @@
                 player.setVelocityY(speedDiag);
             }
 
-            text.x = Math.floor((player.x + player.width / 2) - 100);
-            text.y = Math.floor((player.y + player.height / 2) + 100);
+            // scoreText.x = Math.floor((player.x + player.width / 2) - 350);
+            // scoreText.y = Math.floor((player.y + player.height / 2) - 300);
+
+            // clueText.x = Math.floor((player.x + player.width / 2) - 350);
+            // clueText.y = Math.floor((player.y + player.height / 2) + 200);
+
+            player_map.body.x = player.body.x - 100
+            player_map.body.y = player.body.y - 100
+
+            scoreText.x = Math.floor((player.x + player.width / 2) - 350);
+            scoreText.y = Math.floor((player.y + player.height / 2) - 300);
+
+            clueText.x = Math.floor((player.x + player.width / 2) - 350);
+            clueText.y = Math.floor((player.y + player.height / 2) + 200);
 
         }
 
         function render() {
 
-            this.debug.cameraInfo(this.camera, 32, 32);
-            this.debug.spriteCoords(player, 32, 500);
+            // this.debug.cameraInfo(this.camera, 32, 32);
+            // this.debug.spriteCoords(player, 32, 500);
 
         }
     </script>
