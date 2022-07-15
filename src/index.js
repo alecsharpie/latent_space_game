@@ -30,6 +30,8 @@ var clueText;
 var speed = 500;
 var speedDiag = Math.round(speed * (1 / 1.44));
 
+var num_goals = 1;
+
 console.log(game);
 
 function getRandomInt(max) {
@@ -37,10 +39,18 @@ function getRandomInt(max) {
 }
 
 function collectGoal(player, goal) {
-    goal.disableBody(true, true);
+
+    // goal.disableBody(true, true);
+    goal.destroy();
     score += 1;
     scoreText.setText('SCORE: ' + score);
-    let map_data = JSON.parse(sessionStorage.getItem("data"))
+
+    let all_map_data = JSON.parse(sessionStorage.getItem("data"))
+    let map_data = {};
+    map_data['image_paths'] = all_map_data['image_paths'].slice(0, 10)
+    map_data['X_coords'] = all_map_data['X_coords'].slice(0, 10)
+    map_data['Y_coords'] = all_map_data['Y_coords'].slice(0, 10)
+
     let rand_int = getRandomInt(map_data['image_paths'].length)
     console.log(rand_int)
     clueText.setText("CLUE: " + map_data['image_paths'][rand_int].replace(".png", "").replace("_", " "))
@@ -48,12 +58,13 @@ function collectGoal(player, goal) {
         key: 'goal',
         repeat: 1,
         setXY: {
-            x: map_data['X_coords'][rand_int],
-            y: map_data['Y_coords'][rand_int]
+            x: map_data['X_coords'][rand_int] * 100,
+            y: map_data['Y_coords'][rand_int] * 100
         }
     });
 
     this.physics.add.overlap(player, goal, collectGoal, null, this);
+
 
 }
 
@@ -126,7 +137,7 @@ function preload() {
         this.load.image('signpost' + i, image_path);
     }
 
-    this.load.image('goal', 'assets/goal.png');
+    this.load.image('goal', 'assets/logo.png');
     // this.load.image('logo', 'assets/logo.png');
     this.load.image('background', 'assets/latent_space_background_8bit.png');
     // this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
@@ -163,9 +174,9 @@ function create() {
 
     let all_map_data = JSON.parse(sessionStorage.getItem("data"))
     let map_data = {};
-    map_data['image_paths'] = all_map_data['image_paths'].slice(1, 100)
-    map_data['X_coords'] = all_map_data['X_coords'].slice(1, 100)
-    map_data['Y_coords'] = all_map_data['Y_coords'].slice(1, 100)
+    map_data['image_paths'] = all_map_data['image_paths'].slice(0, 10)
+    map_data['X_coords'] = all_map_data['X_coords'].slice(0, 10)
+    map_data['Y_coords'] = all_map_data['Y_coords'].slice(0, 10)
 
 
     console.log(map_data);
@@ -182,7 +193,10 @@ function create() {
     // only take first 100
 
     for (var i = 0; i < map_data['image_paths'].length; i++) {
-        let sp = signposts.create(map_data['X_coords'][i] * 100, map_data['Y_coords'][i] * 100, 'signpost' + i).setOrigin(0, 0);
+        signposts.create(map_data['X_coords'][i] * 100, map_data['Y_coords'][i] * 100, 'signpost' + i).setOrigin(0, 0);
+        console.log(map_data['image_paths'][i])
+        console.log(map_data['X_coords'][i] * 100)
+        console.log(map_data['Y_coords'][i] * 100)
     }
 
     console.log("after signpost loop")
@@ -215,15 +229,40 @@ function create() {
     // only take first 100
 
     let rand_int = getRandomInt(map_data['image_paths'].length)
-    clueText.setText('CLUE: ' + map_data['image_paths'][rand_int].replace(".png", "").replace(/_/g, " "))
+    let clue_path = map_data['image_paths'][rand_int]
+    clueText.setText('CLUE: ' + clue_path.replace(".png", "").replace(/_/g, " "))
+
+    console.log(map_data['image_paths'].indexOf(clue_path))
+    console.log(rand_int)
+
     goal = this.physics.add.group({
         key: 'goal',
         repeat: 1,
         setXY: {
-            x: map_data['X_coords'][rand_int] * 1000,
-            y: map_data['Y_coords'][rand_int] * 1000
+            x: (map_data['X_coords'][rand_int]) * 100,
+            y: (map_data['Y_coords'][rand_int]) * 100
         }
-    })
+    });
+
+    console.log('coords_rand')
+
+    console.log((map_data['X_coords'][rand_int]) * 100)
+    console.log((map_data['Y_coords'][rand_int]) * 100)
+
+
+    console.log(map_data['image_paths'].indexOf((map_data['X_coords'][rand_int])))
+    console.log(map_data['image_paths'].indexOf((map_data['Y_coords'][rand_int])))
+
+    console.log('coords_img')
+
+    console.log((map_data['X_coords'][map_data['image_paths'].indexOf(clue_path)]))
+    console.log((map_data['Y_coords'][map_data['image_paths'].indexOf(clue_path)]))
+    console.log(map_data['image_paths'][map_data['image_paths'].indexOf(clue_path)]);
+
+
+    console.log(map_data['image_paths'].length)
+    console.log(map_data['X_coords'].length)
+    console.log(map_data['Y_coords'].length)
 
     this.physics.add.overlap(player, goal, collectGoal, null, this);
 
@@ -298,9 +337,13 @@ function create() {
 
     // Animations
 
+    let char_list = ['fire_wizard', 'leafy_druid']
+
+    for (var i = 0; i < char_list.length; i++) {
+
     this.anims.create({
-        key: 'forward',
-        frames: this.anims.generateFrameNumbers('leafy_druid', {
+        key: 'forward_' + char_list[i],
+        frames: this.anims.generateFrameNumbers(char_list[i], {
             frames: [0, 1, 2]
         }),
         frameRate: 12,
@@ -308,8 +351,8 @@ function create() {
     });
 
     this.anims.create({
-        key: 'left',
-        frames: this.anims.generateFrameNumbers('leafy_druid', {
+        key: 'left_' + char_list[i],
+        frames: this.anims.generateFrameNumbers(char_list[i], {
             frames: [4, 5, 6]
         }),
         frameRate: 12,
@@ -317,8 +360,8 @@ function create() {
     });
 
     this.anims.create({
-        key: 'right',
-        frames: this.anims.generateFrameNumbers('leafy_druid', {
+        key: 'right_' + char_list[i],
+        frames: this.anims.generateFrameNumbers(char_list[i], {
             frames: [8, 9, 10]
         }),
         frameRate: 12,
@@ -326,8 +369,8 @@ function create() {
     });
 
     this.anims.create({
-        key: 'back',
-        frames: this.anims.generateFrameNumbers('leafy_druid', {
+        key: 'back_' + char_list[i],
+        frames: this.anims.generateFrameNumbers(char_list[i], {
             frames: [12, 13, 14]
         }),
         frameRate: 12,
@@ -335,56 +378,58 @@ function create() {
     });
 
     this.anims.create({
-        key: 'turn',
-        frames: this.anims.generateFrameNumbers('leafy_druid', {
+        key: 'turn_' + char_list[i],
+        frames: this.anims.generateFrameNumbers(char_list[i], {
             frames: [1]
         }),
         frameRate: 12
     });
 
-    this.anims.create({
-        key: 'forward_fire',
-        frames: this.anims.generateFrameNumbers('fire_wizard', {
-            frames: [0, 1, 2]
-        }),
-        frameRate: 12,
-        repeat: -1
-    });
+  }
 
-    this.anims.create({
-        key: 'left_fire',
-        frames: this.anims.generateFrameNumbers('fire_wizard', {
-            frames: [4, 5, 6]
-        }),
-        frameRate: 12,
-        repeat: -1
-    });
+    // this.anims.create({
+    //     key: 'forward_fire',
+    //     frames: this.anims.generateFrameNumbers('fire_wizard', {
+    //         frames: [0, 1, 2]
+    //     }),
+    //     frameRate: 12,
+    //     repeat: -1
+    // });
 
-    this.anims.create({
-        key: 'right_fire',
-        frames: this.anims.generateFrameNumbers('fire_wizard', {
-            frames: [8, 9, 10]
-        }),
-        frameRate: 12,
-        repeat: -1
-    });
+    // this.anims.create({
+    //     key: 'left_fire',
+    //     frames: this.anims.generateFrameNumbers('fire_wizard', {
+    //         frames: [4, 5, 6]
+    //     }),
+    //     frameRate: 12,
+    //     repeat: -1
+    // });
 
-    this.anims.create({
-        key: 'back_fire',
-        frames: this.anims.generateFrameNumbers('fire_wizard', {
-            frames: [12, 13, 14]
-        }),
-        frameRate: 12,
-        repeat: -1
-    });
+    // this.anims.create({
+    //     key: 'right_fire',
+    //     frames: this.anims.generateFrameNumbers('fire_wizard', {
+    //         frames: [8, 9, 10]
+    //     }),
+    //     frameRate: 12,
+    //     repeat: -1
+    // });
 
-    this.anims.create({
-        key: 'turn_fire',
-        frames: this.anims.generateFrameNumbers('fire_wizard', {
-            frames: [1]
-        }),
-        frameRate: 12
-    });
+    // this.anims.create({
+    //     key: 'back_fire',
+    //     frames: this.anims.generateFrameNumbers('fire_wizard', {
+    //         frames: [12, 13, 14]
+    //     }),
+    //     frameRate: 12,
+    //     repeat: -1
+    // });
+
+    // this.anims.create({
+    //     key: 'turn_fire',
+    //     frames: this.anims.generateFrameNumbers('fire_wizard', {
+    //         frames: [1]
+    //     }),
+    //     frameRate: 12
+    // });
 
     console.log("Game Created")
 }
@@ -392,31 +437,31 @@ function create() {
 function update() {
 
     player.body.setVelocity(0);
-    player.anims.play('turn_fire', true);
+    player.anims.play('turn_' + name_of_sprite, true);
 
     //  Horizontal Movement
 
     if (cursors.left.isDown) {
 
         player.setVelocityX(-speed);
-        player.anims.play('left_fire', true);
+        player.anims.play('left_' + name_of_sprite, true);
     }
 
     if (cursors.right.isDown) {
         player.setVelocityX(speed);
-        player.anims.play('right_fire', true);
+        player.anims.play('right_' + name_of_sprite, true);
     }
 
     //  Vertical Movement
 
     if (cursors.up.isDown) {
         player.setVelocityY(-speed);
-        player.anims.play('back_fire', true);
+        player.anims.play('back_' + name_of_sprite, true);
     }
 
     if (cursors.down.isDown) {
         player.setVelocityY(speed);
-        player.anims.play('forward_fire', true);
+        player.anims.play('forward_' + name_of_sprite, true);
     }
 
     // Diagonal movement
@@ -425,28 +470,28 @@ function update() {
     if (cursors.left.isDown && cursors.up.isDown) {
         player.setVelocityX(-speedDiag);
         player.setVelocityY(-speedDiag);
-        // player.anims.play('back_fire', false);
+        // player.anims.play('back_' + name_of_sprite, false);
     }
 
     // Up and right
     if (cursors.right.isDown && cursors.up.isDown) {
         player.setVelocityX(speedDiag);
         player.setVelocityY(-speedDiag);
-        // player.anims.play('back_fire', false);
+        // player.anims.play('back_' + name_of_sprite, false);
     }
 
     // Down and right
     if (cursors.right.isDown && cursors.down.isDown) {
         player.setVelocityX(speedDiag);
         player.setVelocityY(speedDiag);
-        // player.anims.play('forward_fire', false);
+        // player.anims.play('forward_' + name_of_sprite, false);
     }
 
     // Down and left
     if (cursors.left.isDown && cursors.down.isDown) {
         player.setVelocityX(-speedDiag);
         player.setVelocityY(speedDiag);
-        // player.anims.play('forward_fire', false);
+        // player.anims.play('forward_' + name_of_sprite, false);
     }
 
     // scoreText.x = Math.floor((player.x + player.width / 2) - 350);
