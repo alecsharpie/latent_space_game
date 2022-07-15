@@ -1,3 +1,5 @@
+function createGame(avatar){
+
 var config = {
     parent: game_canvas_container,
     type: Phaser.AUTO,
@@ -99,12 +101,12 @@ function preload() {
 
     this.load.setBaseURL('http://localhost:3000')
 
-    this.load.json({
-        key: 'map',
-        url: 'assets/latent_space_map.json'
-    });
+    // this.load.json({
+    //     key: 'map',
+    //     url: 'assets/latent_space_map_semisimple.json'
+    // });
 
-    let map_path = "http://localhost:3000/assets/latent_space_map.json";
+    let map_path = "http://localhost:3000/assets/latent_space_map_semisimple.json";
 
     fetch(map_path)
         .then(function(resp) {
@@ -120,7 +122,7 @@ function preload() {
     let data = JSON.parse(sessionStorage.getItem("data"))
 
     for (var i = 0; i < data['image_paths'].length; i++) {
-        let image_path = "http://localhost:3000/assets/images_simple/" + data['image_paths'][i];
+        let image_path = "http://localhost:3000/assets/artist_images_semisimple/" + data['image_paths'][i];
         this.load.image('signpost' + i, image_path);
     }
 
@@ -152,15 +154,21 @@ var player;
 var x_start_point = 500;
 var y_start_point = 500;
 
-var name_of_sprite = 'fire_wizard';
+// var name_of_sprite = 'fire_wizard';
+var name_of_sprite = avatar;
 
 function create() {
 
     console.log('Getting Map data')
 
-    let map_data = JSON.parse(sessionStorage.getItem("data"))
+    let all_map_data = JSON.parse(sessionStorage.getItem("data"))
+    let map_data = {};
+    map_data['image_paths'] = all_map_data['image_paths'].slice(1, 100)
+    map_data['X_coords'] = all_map_data['X_coords'].slice(1, 100)
+    map_data['Y_coords'] = all_map_data['Y_coords'].slice(1, 100)
 
 
+    console.log(map_data);
     console.log('Creating game')
 
     // Background
@@ -171,8 +179,10 @@ function create() {
 
     signposts = this.physics.add.staticGroup();
 
+    // only take first 100
+
     for (var i = 0; i < map_data['image_paths'].length; i++) {
-        let sp = signposts.create(map_data['X_coords'][i], map_data['Y_coords'][i], 'signpost' + i).setOrigin(0, 0);
+        let sp = signposts.create(map_data['X_coords'][i] * 100, map_data['Y_coords'][i] * 100, 'signpost' + i).setOrigin(0, 0);
     }
 
     console.log("after signpost loop")
@@ -202,14 +212,16 @@ function create() {
 
     clueText = this.add.text(0, 0, "", style);
 
+    // only take first 100
+
     let rand_int = getRandomInt(map_data['image_paths'].length)
     clueText.setText('CLUE: ' + map_data['image_paths'][rand_int].replace(".png", "").replace(/_/g, " "))
     goal = this.physics.add.group({
         key: 'goal',
         repeat: 1,
         setXY: {
-            x: map_data['X_coords'][rand_int],
-            y: map_data['Y_coords'][rand_int]
+            x: map_data['X_coords'][rand_int] * 1000,
+            y: map_data['Y_coords'][rand_int] * 1000
         }
     })
 
@@ -458,5 +470,7 @@ function render() {
 
     // this.debug.cameraInfo(this.camera, 32, 32);
     // this.debug.spriteCoords(player, 32, 500);
+
+}
 
 }
