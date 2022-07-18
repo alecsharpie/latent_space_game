@@ -21,7 +21,7 @@ background-image: url("https://upload.wikimedia.org/wikipedia/commons/2/25/Circu
     background-position: calc(100% + 50px) calc(100% + 50px); } */
 
 .container-fluid {
-    background-color: #36454F;
+    background-color: #212121;
 }
 
 h1 {
@@ -32,8 +32,13 @@ h1 {
     text-align: center;
 }
 
+label {
+    color: #FFF
+}
+
 select {
     background-color: rgba(255, 255, 255, 0.5);
+    color: #FFF
 }
 
 a {
