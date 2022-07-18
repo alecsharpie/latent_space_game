@@ -4,37 +4,41 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser-arcade-physics.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
-    <!-- <script src="inputs.js"></script> -->
     <script src="index.js"></script>
-</head>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>
 
 <body>
-    <div>
-        <h1>Latent Space: The Game</h1>
-    </div>
-    <!-- Select your character <input  id="insertedName" /> -->
-    <div>
-        <label for="avatar">Choose an Avatar:</label>
-        <select id="avatar" name="avatar">
-          <option value="fire_wizard">Fire Wizard</option>
-          <option value="leafy_druid">Leafy Druid</option>
-        </select>
-    </div>
-    <button onclick="createGame(avatar.value)">Play</button>
-    <!-- <input type="button" onclick="create()" value="Display"> -->
-    <div id="game_canvas_container"></div>
-    <div>
+    <div class="container-fluid">
         <div>
-
+            <h1>Latent Space: The Game</h1>
         </div>
-        <div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div>
+                    <label for="avatar">Choose an Avatar:</label>
+                    <select id="avatar" name="avatar">
+              <option value="fire_wizard">Fire Wizard</option>
+              <option value="leafy_druid">Leafy Druid</option>
+            </select>
+                </div>
+                <div>
+                    <button onclick="createGame(avatar.value)">Play</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="game_canvas_container"></div>
+            </div>
+            <!-- <p>, via Wikimedia Commons</p>
+            <a href="https://commons.wikimedia.org/wiki/File:Circuit_faded.png">Ryan.ludwikowski</a>
+            <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>
+            <p>, via Wikimedia Commons</p> -->
         </div>
     </div>
-    <div>
-
-    </div>
-
-
 </body>
 
 </html>
