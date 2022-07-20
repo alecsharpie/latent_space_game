@@ -28,6 +28,7 @@ module.exports = {
             },
             {
                 test: /\.(gif|png|jpe?g|svg|xml)$/i,
+                exclude: /artist_images/,
                 use: "file-loader"
             }
         ]
