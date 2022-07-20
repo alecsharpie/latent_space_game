@@ -1,15 +1,18 @@
-import "./styles.css";
-// import latent_space_map from './assets/latent_space_map_semisimple.json';
-// import goal_img from './assets/logo.png';
+// import "./styles.css";
+import { data } from 'autoprefixer';
+import latent_space_map from './assets/latent_space_map_semisimple.json';
+// import goal_img from './assets/goal.png';
 // import bg_img from './assets/latent_space_background_8bit.png';
 
-function importAll(r) {
-    return r.keys().map(r);
-}
+sessionStorage.setItem("latent_space_map", JSON.stringify(latent_space_map))
 
-const images = importAll(require.context('./assets/artist_images_semisimple/', false, /\.(png|jpe?g|svg)$/));
+// function importAll(r) {
+//     return r.keys().map(r);
+// }
 
-function createGame(avatar) {
+// const images = importAll(require.context('./assets/artist_images_semisimple/', false, /\.(png|jpe?g|svg)$/));
+
+function createGame(name_of_sprite) {
 
     var config = {
         parent: game_canvas_container,
@@ -32,6 +35,8 @@ function createGame(avatar) {
         }
     };
 
+    sessionStorage.setItem("name_of_sprite", name_of_sprite)
+
     var game = new Phaser.Game(config);
 
     var score = 0;
@@ -43,6 +48,8 @@ function createGame(avatar) {
 
     var num_goals = 1;
     var goal;
+
+    var map_data;
 
     console.log(game);
 
@@ -57,16 +64,12 @@ function createGame(avatar) {
         score += 1;
         scoreText.setText('SCORE: ' + score);
 
-        let all_map_data = JSON.parse(sessionStorage.getItem("data"))
+        let all_map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
         let map_data = {};
-
-        console.log(all_map_data)
 
         map_data['image_paths'] = all_map_data['image_paths'].slice(0, 10)
         map_data['X_coords'] = all_map_data['X_coords'].slice(0, 10)
         map_data['Y_coords'] = all_map_data['Y_coords'].slice(0, 10)
-
-        console.log(map_data)
 
         let rand_int = getRandomInt(map_data['image_paths'].length)
         console.log(rand_int)
@@ -81,7 +84,6 @@ function createGame(avatar) {
         });
 
         this.physics.add.overlap(player, goal, collectGoal, null, this);
-
 
     }
 
@@ -127,7 +129,8 @@ function createGame(avatar) {
 
         });
 
-        this.load.setBaseURL('http://localhost:3000')
+        // this.load.setBaseURL('http://localhost:3000')
+        this.load.setBaseURL('https://storage.googleapis.com/website-assets-alecsharpie/latent_space_game/')
 
         // this.load.json({
         //     key: 'map',
@@ -136,29 +139,31 @@ function createGame(avatar) {
 
         let map_path = "http://localhost:3000/assets/latent_space_map_semisimple.json";
 
-        fetch(map_path)
-            .then(function(resp) {
-                return resp.json()
-            })
-            .then(function(data) {
-                // APIresults(data);
-                sessionStorage.setItem("data", JSON.stringify(data));
-                console.log('Saved data in session storage')
-            })
-            .catch(function() {});
+        // fetch(map_path)
+        //     .then(function(resp) {
+        //         return resp.json()
+        //     })
+        //     .then(function(data) {
+        //         // APIresults(data);
+        //         sessionStorage.setItem("data", JSON.stringify(data));
+        //         console.log('Saved data in session storage')
+        //     })
+        //     .catch(function() {});
 
-        let data = JSON.parse(sessionStorage.getItem("data"))
+        map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
 
-        console.log(data)
+        console.log(map_data)
+        console.log(map_data['image_paths'])
 
-        console.log(data['image_paths'])
+        let local_path = "http://localhost:3000/assets/artist_images_semisimple/"
+        let gcp_bucket_path = "https://storage.googleapis.com/website-assets-alecsharpie/latent_space_game/"
 
-        for (var i = 0; i < data['image_paths'].length; i++) {
-            let image_path = "http://localhost:3000/assets/artist_images_semisimple/" + data['image_paths'][i];
-            this.load.image('signpost' + i, image_path);
+        for (var i = 0; i < map_data['image_paths'].length; i++) {
+            let image_path = gcp_bucket_path + 'artist_images_semisimple/' + map_data['image_paths'][i];
+            this.load.image('signpost' + i, encodeURI(image_path));
         }
 
-        this.load.image('goal', 'assets/logo.png');
+        this.load.image('goal', 'assets/goal.png');
         // this.load.image('logo', 'assets/logo.png');
         this.load.image('background', 'assets/latent_space_background_8bit.png');
         // this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
@@ -188,13 +193,13 @@ function createGame(avatar) {
     var y_start_point = 500;
 
     // var name_of_sprite = 'fire_wizard';
-    var name_of_sprite = avatar;
+    // var name_of_sprite = avatar;
 
     function create() {
 
         console.log('Getting Map data')
 
-        let all_map_data = JSON.parse(sessionStorage.getItem("data"))
+        let all_map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
         let map_data = {};
         map_data['image_paths'] = all_map_data['image_paths'].slice(0, 10)
         map_data['X_coords'] = all_map_data['X_coords'].slice(0, 10)
@@ -359,9 +364,12 @@ function createGame(avatar) {
 
         // Animations
 
-        let char_list = ['fire_wizard', 'leafy_druid']
+        var char_list = ['fire_wizard', 'leafy_druid'];
 
         for (var i = 0; i < char_list.length; i++) {
+
+            console.log(char_list)
+            console.log(char_list[i])
 
             this.anims.create({
                 key: 'forward_' + char_list[i],
@@ -457,6 +465,8 @@ function createGame(avatar) {
     }
 
     function update() {
+
+        let name_of_sprite = JSON.parse(sessionStorage.getItem("name_of_sprite"))
 
         player.body.setVelocity(0);
         player.anims.play('turn_' + name_of_sprite, true);

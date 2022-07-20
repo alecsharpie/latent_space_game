@@ -4,6 +4,7 @@
     "description": "A Phaser 3 Project Template",
     "main": "src/index.html",
     "scripts": {
+        "deploy": "gsutil cp -r dist gs://website-assets-alecsharpie/latent_space_game/",
         "build": "webpack --config webpack/prod.js",
         "start": "webpack-dev-server --config webpack/base.js --open"
     },
@@ -37,6 +38,7 @@
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
+        "gh-pages": "^4.0.0",
         "phaser": "^3.55.2"
     }
 }
