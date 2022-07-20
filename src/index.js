@@ -1,3 +1,14 @@
+import "./styles.css";
+// import latent_space_map from './assets/latent_space_map_semisimple.json';
+// import goal_img from './assets/logo.png';
+// import bg_img from './assets/latent_space_background_8bit.png';
+
+function importAll(r) {
+    return r.keys().map(r);
+}
+
+const images = importAll(require.context('./assets/artist_images_semisimple/', false, /\.(png|jpe?g|svg)$/));
+
 function createGame(avatar) {
 
     var config = {
@@ -31,6 +42,7 @@ function createGame(avatar) {
     var speedDiag = Math.round(speed * (1 / 1.44));
 
     var num_goals = 1;
+    var goal;
 
     console.log(game);
 
@@ -47,9 +59,14 @@ function createGame(avatar) {
 
         let all_map_data = JSON.parse(sessionStorage.getItem("data"))
         let map_data = {};
+
+        console.log(all_map_data)
+
         map_data['image_paths'] = all_map_data['image_paths'].slice(0, 10)
         map_data['X_coords'] = all_map_data['X_coords'].slice(0, 10)
         map_data['Y_coords'] = all_map_data['Y_coords'].slice(0, 10)
+
+        console.log(map_data)
 
         let rand_int = getRandomInt(map_data['image_paths'].length)
         console.log(rand_int)
@@ -132,6 +149,10 @@ function createGame(avatar) {
 
         let data = JSON.parse(sessionStorage.getItem("data"))
 
+        console.log(data)
+
+        console.log(data['image_paths'])
+
         for (var i = 0; i < data['image_paths'].length; i++) {
             let image_path = "http://localhost:3000/assets/artist_images_semisimple/" + data['image_paths'][i];
             this.load.image('signpost' + i, image_path);
@@ -162,6 +183,7 @@ function createGame(avatar) {
     // var platforms;
     var cursors;
     var player;
+    var player_map;
     var x_start_point = 500;
     var y_start_point = 500;
 
@@ -188,7 +210,7 @@ function createGame(avatar) {
 
         // Signposts
 
-        signposts = this.physics.add.staticGroup();
+        var signposts = this.physics.add.staticGroup();
 
         // only take first 100
 
@@ -519,3 +541,5 @@ function createGame(avatar) {
     }
 
 }
+
+document.getElementById('playButton').addEventListener('click', createGame);

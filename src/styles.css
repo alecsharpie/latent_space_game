@@ -26,7 +26,7 @@ background-image: url("https://upload.wikimedia.org/wikipedia/commons/2/25/Circu
 
 h1 {
     /* background-color: rgba(255, 255, 255, 0.3); */
-    color: #FFF;
+    color: #FFFFFF;
     /* border-bottom: 2px solid rgba(0, 0, 0, 0.2); */
     /* border-top: 2px solid rgba(0, 0, 0, 0.2); */
     text-align: center;
@@ -37,7 +37,7 @@ label {
 }
 
 select {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(200, 200, 200);
     color: #FFF
 }
 
