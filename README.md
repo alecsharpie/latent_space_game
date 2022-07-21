@@ -1,7 +1,7 @@
 # Explore Latent Space in this 2D way-finding game
 
-# Based on Phaser 3 Webpack Project Template
-[github repo](https://github.com/photonstorm/phaser3-project-template)
+## Based on Phaser 3 Webpack Project Template
+[github repo here](https://github.com/photonstorm/phaser3-project-template)
 
 ## Requirements
 
