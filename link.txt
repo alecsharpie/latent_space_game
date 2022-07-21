@@ -1,1 +1,3 @@
-https://storage.googleapis.com/website-assets-alecsharpie/latent_space_game/dist/index.html
+https://storage.googleapis.com/www.latentspacegame.com/dist/index.html
+
+www.latentspacegame.com

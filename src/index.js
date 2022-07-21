@@ -12,7 +12,11 @@ sessionStorage.setItem("latent_space_map", JSON.stringify(latent_space_map))
 
 // const images = importAll(require.context('./assets/artist_images_semisimple/', false, /\.(png|jpe?g|svg)$/));
 
-function createGame(name_of_sprite) {
+var name_of_sprite;
+
+function createGame(avatar) {
+
+    console.log(avatar)
 
     var config = {
         parent: game_canvas_container,
@@ -35,7 +39,11 @@ function createGame(name_of_sprite) {
         }
     };
 
-    sessionStorage.setItem("name_of_sprite", name_of_sprite)
+    name_of_sprite = avatar;
+
+    console.log(name_of_sprite)
+
+    // sessionStorage.setItem("name_of_sprite", name_of_sprite)
 
     var game = new Phaser.Game(config);
 
@@ -466,7 +474,9 @@ function createGame(name_of_sprite) {
 
     function update() {
 
-        let name_of_sprite = JSON.parse(sessionStorage.getItem("name_of_sprite"))
+        // let name_of_sprite = JSON.parse(sessionStorage.getItem("name_of_sprite"))
+
+        // console.log(name_of_sprite)
 
         player.body.setVelocity(0);
         player.anims.play('turn_' + name_of_sprite, true);
@@ -552,4 +562,14 @@ function createGame(name_of_sprite) {
 
 }
 
-document.getElementById('playButton').addEventListener('click', createGame);
+// someObj.addEventListener('click', some_function(someVar));
+
+// var some_function = function(someVar) {
+//     return function curried_func(e) {
+//         // do something here
+//     }
+// }
+
+let selected_avatar = document.getElementById('avatar').value;
+console.log(selected_avatar)
+document.getElementById('playButton').addEventListener('click', (evt) => createGame(selected_avatar));
