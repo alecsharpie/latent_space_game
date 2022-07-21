@@ -4,7 +4,7 @@
     "description": "A Phaser 3 Project Template",
     "main": "src/index.html",
     "scripts": {
-        "deploy": "gsutil cp -r dist gs://website-assets-alecsharpie/latent_space_game/",
+        "deploy": "gsutil cp -r dist gs://www.latentspacegame.com",
         "build": "webpack --config webpack/prod.js",
         "start": "webpack-dev-server --config webpack/base.js --open"
     },
