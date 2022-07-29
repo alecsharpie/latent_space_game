@@ -6,11 +6,12 @@
     background-color: white;
 }
 
-body {
-    /* background-color: #37a888; */
+
+/* body {
+    background-color: #37a888;
     background-color: lightblue;
     min-height: 700px;
-}
+} */
 
 
 /* background-repeat: repeat;
@@ -20,31 +21,36 @@ background-image: url("https://upload.wikimedia.org/wikipedia/commons/2/25/Circu
 /*
     background-position: calc(100% + 50px) calc(100% + 50px); } */
 
-.container-fluid {
+
+/* .container-fluid {
     background-color: #212121;
-}
+} */
 
-h1 {
-    /* background-color: rgba(255, 255, 255, 0.3); */
+
+/* h1 {
+    background-color: rgba(255, 255, 255, 0.3);
     color: #FFFFFF;
-    /* border-bottom: 2px solid rgba(0, 0, 0, 0.2); */
-    /* border-top: 2px solid rgba(0, 0, 0, 0.2); */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    border-top: 2px solid rgba(0, 0, 0, 0.2);
     text-align: center;
-}
+} */
 
-label {
+
+/* label {
     color: #FFF
-}
+} */
 
-select {
+
+/* select {
     background-color: rgba(200, 200, 200);
     color: #FFF
-}
+} */
 
-a {
+
+/* a {
     font-size: 0.6em;
 }
 
 p {
     font-size: 0.6em;
-}
+} */

@@ -1,4 +1,4 @@
-// import "./styles.css";
+import "./styles.css";
 import { data } from 'autoprefixer';
 import latent_space_map from './assets/latent_space_map_semisimple.json';
 // import goal_img from './assets/goal.png';
@@ -21,8 +21,8 @@ function createGame(avatar) {
     var config = {
         parent: game_canvas_container,
         type: Phaser.AUTO,
-        width: 1000,
-        height: 700,
+        width: 800,
+        height: 600,
         physics: {
             default: 'arcade',
             arcade: {
@@ -238,7 +238,7 @@ function createGame(avatar) {
 
         // Player & Cursor
 
-        player = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite).setScale(1);
+        player = this.physics.add.sprite(this.world.centerX, this.world.centerY, name_of_sprite).setScale(1);
 
         player.body.setCollideWorldBounds(true);
 
@@ -350,7 +350,7 @@ function createGame(avatar) {
 
         this.cameras.main.startFollow(player);
 
-        player_map = this.physics.add.sprite(x_start_point, x_start_point, name_of_sprite).setScale(10);
+        player_map = this.physics.add.sprite(this.world.centerX, this.world.centerY, name_of_sprite).setScale(10);
 
         this.cameras.main.ignore(player_map);
 
@@ -369,6 +369,13 @@ function createGame(avatar) {
 
 
         console.log("after mini-camera")
+
+
+        // Follow cursor
+
+        this.input.on('pointermove', function(pointer) {
+            this.physics.moveToObject(player, { x: pointer.worldX, y: pointer.worldY }, 240);
+        }, this);
 
         // Animations
 
@@ -480,6 +487,20 @@ function createGame(avatar) {
 
         player.body.setVelocity(0);
         player.anims.play('turn_' + name_of_sprite, true);
+
+        // if (this.input.mousePointer.isDown) {
+        //     //  400 is the speed it will move towards the mouse
+        //     this.physics.moveTo(player, this.scene.input.x + this.scene.cameras.main.scrollX, this.scene.input.y + this.scene.cameras.main.scrollY, null, 750);
+        // }
+        //  if it's overlapping the mouse, don't move any more
+        // if (Phaser.Rectangle.contains(sprite.body, game.input.x, game.input.y)) {
+        //     sprite.body.velocity.setTo(0, 0);
+        // }
+        // } else {
+        //     sprite.body.velocity.setTo(0, 0);
+        // }
+
+        // }
 
         //  Horizontal Movement
 
