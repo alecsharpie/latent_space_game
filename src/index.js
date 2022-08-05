@@ -1,6 +1,6 @@
 import "./styles.css";
 import { data } from 'autoprefixer';
-import latent_space_map from './assets/latent_space_map_semisimple.json';
+import latent_space_map from './assets/sac_latent_space_map.json';
 // import goal_img from './assets/goal.png';
 // import bg_img from './assets/latent_space_background_8bit.png';
 
