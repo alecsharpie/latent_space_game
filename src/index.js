@@ -72,12 +72,12 @@ function createGame(avatar) {
         score += 1;
         scoreText.setText('SCORE: ' + score);
 
-        let all_map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
-        let map_data = {};
+        let map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
+            // let all_map_data = {};
 
-        map_data['image_paths'] = all_map_data['image_paths'].slice(0, 10)
-        map_data['X_coords'] = all_map_data['X_coords'].slice(0, 10)
-        map_data['Y_coords'] = all_map_data['Y_coords'].slice(0, 10)
+        // map_data['image_paths'] = all_map_data['image_paths']
+        // map_data['X_coords'] = all_map_data['X_coords']
+        // map_data['Y_coords'] = all_map_data['Y_coords']
 
         let rand_int = getRandomInt(map_data['image_paths'].length)
         console.log(rand_int)
@@ -86,8 +86,8 @@ function createGame(avatar) {
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: map_data['X_coords'][rand_int] * 100,
-                y: map_data['Y_coords'][rand_int] * 100
+                x: map_data['X_colour_coords'][rand_int] * 100,
+                y: map_data['Y_colour_coords'][rand_int] * 100
             }
         });
 
@@ -138,14 +138,14 @@ function createGame(avatar) {
         });
 
         // this.load.setBaseURL('http://localhost:3000')
-        this.load.setBaseURL('https://storage.googleapis.com/website-assets-alecsharpie/latent_space_game/')
+        this.load.setBaseURL('https://storage.googleapis.com/www.latentspacegame.com/')
 
         // this.load.json({
         //     key: 'map',
         //     url: 'assets/latent_space_map_semisimple.json'
         // });
 
-        let map_path = "http://localhost:3000/assets/latent_space_map_semisimple.json";
+        // let map_path = "http://localhost:3000/assets/latent_space_map_semisimple.json";
 
         // fetch(map_path)
         //     .then(function(resp) {
@@ -163,11 +163,11 @@ function createGame(avatar) {
         console.log(map_data)
         console.log(map_data['image_paths'])
 
-        let local_path = "http://localhost:3000/assets/artist_images_semisimple/"
-        let gcp_bucket_path = "https://storage.googleapis.com/website-assets-alecsharpie/latent_space_game/"
+        // let local_path = "http://localhost:3000/assets/artist_images_semisimple/"
+        let gcp_bucket_path = "https://storage.googleapis.com/www.latentspacegame.com/"
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
-            let image_path = gcp_bucket_path + 'artist_images_semisimple/' + map_data['image_paths'][i];
+            let image_path = gcp_bucket_path + 'sac_images_subset/' + map_data['image_paths'][i];
             this.load.image('signpost' + i, encodeURI(image_path));
         }
 
@@ -207,11 +207,11 @@ function createGame(avatar) {
 
         console.log('Getting Map data')
 
-        let all_map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
-        let map_data = {};
-        map_data['image_paths'] = all_map_data['image_paths'].slice(0, 10)
-        map_data['X_coords'] = all_map_data['X_coords'].slice(0, 10)
-        map_data['Y_coords'] = all_map_data['Y_coords'].slice(0, 10)
+        let map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
+            // let all_map_data = {};
+            // map_data['image_paths'] = all_map_data['image_paths']
+            // map_data['X_coords'] = all_map_data['X_coords']
+            // map_data['Y_coords'] = all_map_data['Y_coords']
 
 
         console.log(map_data);
@@ -228,10 +228,10 @@ function createGame(avatar) {
         // only take first 100
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
-            signposts.create(map_data['X_coords'][i] * 100, map_data['Y_coords'][i] * 100, 'signpost' + i).setOrigin(0, 0);
+            signposts.create(map_data['X_colour_coords'][i] * 100, map_data['Y_colour_coords'][i] * 100, 'signpost' + i).setOrigin(0, 0);
             console.log(map_data['image_paths'][i])
-            console.log(map_data['X_coords'][i] * 100)
-            console.log(map_data['Y_coords'][i] * 100)
+            console.log(map_data['X_colour_coords'][i] * 100)
+            console.log(map_data['Y_colour_coords'][i] * 100)
         }
 
         console.log("after signpost loop")
@@ -274,30 +274,30 @@ function createGame(avatar) {
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: (map_data['X_coords'][rand_int]) * 100,
-                y: (map_data['Y_coords'][rand_int]) * 100
+                x: (map_data['X_colour_coords'][rand_int]) * 100,
+                y: (map_data['Y_colour_coords'][rand_int]) * 100
             }
         });
 
-        console.log('coords_rand')
+        // console.log('coords_rand')
 
-        console.log((map_data['X_coords'][rand_int]) * 100)
-        console.log((map_data['Y_coords'][rand_int]) * 100)
-
-
-        console.log(map_data['image_paths'].indexOf((map_data['X_coords'][rand_int])))
-        console.log(map_data['image_paths'].indexOf((map_data['Y_coords'][rand_int])))
-
-        console.log('coords_img')
-
-        console.log((map_data['X_coords'][map_data['image_paths'].indexOf(clue_path)]))
-        console.log((map_data['Y_coords'][map_data['image_paths'].indexOf(clue_path)]))
-        console.log(map_data['image_paths'][map_data['image_paths'].indexOf(clue_path)]);
+        // console.log((map_data['X_colour_coords'][rand_int]) * 100)
+        // console.log((map_data['Y_colour_coords'][rand_int]) * 100)
 
 
-        console.log(map_data['image_paths'].length)
-        console.log(map_data['X_coords'].length)
-        console.log(map_data['Y_coords'].length)
+        // console.log(map_data['image_paths'].indexOf((map_data['X_coords'][rand_int])))
+        // console.log(map_data['image_paths'].indexOf((map_data['Y_coords'][rand_int])))
+
+        // console.log('coords_img')
+
+        // console.log((map_data['X_colour_coords'][map_data['image_paths'].indexOf(clue_path)]))
+        // console.log((map_data['Y_colour_coords'][map_data['image_paths'].indexOf(clue_path)]))
+        // console.log(map_data['image_paths'][map_data['image_paths'].indexOf(clue_path)]);
+
+
+        // console.log(map_data['image_paths'].length)
+        // console.log(map_data['X_colour_coords'].length)
+        // console.log(map_data['Y_colour_coords'].length)
 
         this.physics.add.overlap(player, goal, collectGoal, null, this);
 
