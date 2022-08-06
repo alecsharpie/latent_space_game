@@ -86,8 +86,8 @@ function createGame(avatar) {
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: map_data['X_colour_coords'][rand_int] * 100,
-                y: map_data['Y_colour_coords'][rand_int] * 100
+                x: map_data['X_colour_coords'][rand_int] * 1000,
+                y: map_data['Y_colour_coords'][rand_int] * 1000
             }
         });
 
@@ -228,17 +228,17 @@ function createGame(avatar) {
         // only take first 100
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
-            signposts.create(map_data['X_colour_coords'][i] * 100, map_data['Y_colour_coords'][i] * 100, 'signpost' + i).setOrigin(0, 0);
+            signposts.create(map_data['X_colour_coords'][i] * 1000, map_data['Y_colour_coords'][i] * 1000, 'signpost' + i).setOrigin(0, 0);
             console.log(map_data['image_paths'][i])
-            console.log(map_data['X_colour_coords'][i] * 100)
-            console.log(map_data['Y_colour_coords'][i] * 100)
+            console.log(map_data['X_colour_coords'][i] * 1000)
+            console.log(map_data['Y_colour_coords'][i] * 1000)
         }
 
         console.log("after signpost loop")
 
         // Player & Cursor
 
-        player = this.physics.add.sprite(this.world.centerX, this.world.centerY, name_of_sprite).setScale(1);
+        player = this.physics.add.sprite(500, 500, name_of_sprite).setScale(1);
 
         player.body.setCollideWorldBounds(true);
 
@@ -274,8 +274,8 @@ function createGame(avatar) {
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: (map_data['X_colour_coords'][rand_int]) * 100,
-                y: (map_data['Y_colour_coords'][rand_int]) * 100
+                x: (map_data['X_colour_coords'][rand_int]) * 1000,
+                y: (map_data['Y_colour_coords'][rand_int]) * 1000
             }
         });
 
@@ -350,7 +350,7 @@ function createGame(avatar) {
 
         this.cameras.main.startFollow(player);
 
-        player_map = this.physics.add.sprite(this.world.centerX, this.world.centerY, name_of_sprite).setScale(10);
+        player_map = this.physics.add.sprite(500, 500, name_of_sprite).setScale(10);
 
         this.cameras.main.ignore(player_map);
 
