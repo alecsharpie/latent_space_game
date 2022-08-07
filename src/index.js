@@ -14,14 +14,16 @@ sessionStorage.setItem("latent_space_map", JSON.stringify(latent_space_map))
 
 var name_of_sprite;
 
-function createGame(avatar) {
+var name_of_world;
+
+function createGame(avatar, world) {
 
     console.log(avatar)
 
     var config = {
         parent: game_canvas_container,
         type: Phaser.AUTO,
-        width: 800,
+        width: 900,
         height: 600,
         physics: {
             default: 'arcade',
@@ -40,6 +42,7 @@ function createGame(avatar) {
     };
 
     name_of_sprite = avatar;
+    name_of_world = world;
 
     console.log(name_of_sprite)
 
@@ -81,13 +84,13 @@ function createGame(avatar) {
 
         let rand_int = getRandomInt(map_data['image_paths'].length)
         console.log(rand_int)
-        clueText.setText("CLUE: " + map_data['image_paths'][rand_int].replace(".png", "").replace("_", " "))
+        clueText.setText("CLUE: " + map_data['image_paths'][rand_int].replace(".png", "").replaceAll("_", " "))
         goal = this.physics.add.group({
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: map_data['X_colour_coords'][rand_int] * 1000,
-                y: map_data['Y_colour_coords'][rand_int] * 1000
+                x: map_data['X_' + name_of_world][rand_int] * 10,
+                y: map_data['Y_' + name_of_world][rand_int] * 10
             }
         });
 
@@ -118,13 +121,13 @@ function createGame(avatar) {
         var progressBar = this.add.graphics();
         var progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(330, 340, 320, 50);
+        progressBox.fillRect(290, 275, 320, 50);
 
         this.load.on('progress', function(value) {
             // console.log(value);
             progressBar.clear();
             progressBar.fillStyle(0x00FF00, 1);
-            progressBar.fillRect(340, 350, 300 * value, 30);
+            progressBar.fillRect(300, 285, 300 * value, 30);
         });
 
         this.load.on('fileprogress', function(file) {
@@ -219,7 +222,7 @@ function createGame(avatar) {
 
         // Background
 
-        let bg = this.add.tileSprite(0, 0, 10000, 10000, 'background').setScrollFactor(0.3);
+        let bg = this.add.tileSprite(0, 0, 5000, 5000, 'background').setScrollFactor(0.3);
 
         // Signposts
 
@@ -228,17 +231,17 @@ function createGame(avatar) {
         // only take first 100
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
-            signposts.create(map_data['X_colour_coords'][i] * 1000, map_data['Y_colour_coords'][i] * 1000, 'signpost' + i).setOrigin(0, 0);
+            signposts.create(map_data['X_' + name_of_world][i] * 5, map_data['Y_' + name_of_world][i] * 5, 'signpost' + i).setOrigin(0, 0);
             console.log(map_data['image_paths'][i])
-            console.log(map_data['X_colour_coords'][i] * 1000)
-            console.log(map_data['Y_colour_coords'][i] * 1000)
+            console.log(map_data['X_' + name_of_world][i] * 5)
+            console.log(map_data['Y_' + name_of_world][i] * 5)
         }
 
         console.log("after signpost loop")
 
         // Player & Cursor
 
-        player = this.physics.add.sprite(500, 500, name_of_sprite).setScale(1);
+        player = this.physics.add.sprite(2500, 2500, name_of_sprite).setScale(1);
 
         player.body.setCollideWorldBounds(true);
 
@@ -261,11 +264,9 @@ function createGame(avatar) {
 
         clueText = this.add.text(0, 0, "", style);
 
-        // only take first 100
-
         let rand_int = getRandomInt(map_data['image_paths'].length)
         let clue_path = map_data['image_paths'][rand_int]
-        clueText.setText('CLUE: ' + clue_path.replace(".png", "").replace(/_/g, " "))
+        clueText.setText('CLUE: ' + clue_path.replace(".png", "").replaceAll("_", " "))
 
         console.log(map_data['image_paths'].indexOf(clue_path))
         console.log(rand_int)
@@ -274,8 +275,8 @@ function createGame(avatar) {
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: (map_data['X_colour_coords'][rand_int]) * 1000,
-                y: (map_data['Y_colour_coords'][rand_int]) * 1000
+                x: (map_data['X_' + name_of_world][rand_int]) * 5,
+                y: (map_data['Y_' + name_of_world][rand_int]) * 5
             }
         });
 
@@ -306,7 +307,7 @@ function createGame(avatar) {
 
         //Edges
 
-        this.physics.world.setBounds(0, 0, bg.displayWidth, bg.displayHeight, true, true, true, false);
+        this.physics.world.setBounds(450, 450, bg.displayWidth - 450, bg.displayHeight - 450, true, true, true, false);
 
         // platforms = this.physics.add.staticGroup();
 
@@ -350,7 +351,7 @@ function createGame(avatar) {
 
         this.cameras.main.startFollow(player);
 
-        player_map = this.physics.add.sprite(500, 500, name_of_sprite).setScale(10);
+        player_map = this.physics.add.sprite(2500, 2500, name_of_sprite).setScale(10);
 
         this.cameras.main.ignore(player_map);
 
@@ -358,7 +359,7 @@ function createGame(avatar) {
 
 
         //  The miniCam
-        this.minimap = this.cameras.add(695, 5, 300, 300).setZoom(0.03).setName('mini');
+        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.03).setName('mini');
         this.minimap.setBackgroundColor(0x000000);
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;
@@ -373,7 +374,7 @@ function createGame(avatar) {
 
         // Follow cursor
 
-        this.input.on('pointermove', function(pointer) {
+        this.input.on('pointerdown', function(pointer) {
             this.physics.moveToObject(player, { x: pointer.worldX, y: pointer.worldY }, 240);
         }, this);
 
@@ -563,13 +564,13 @@ function createGame(avatar) {
         // clueText.x = Math.floor((player.x + player.width / 2) - 350);
         // clueText.y = Math.floor((player.y + player.height / 2) + 200);
 
-        player_map.body.x = player.body.x - 100
-        player_map.body.y = player.body.y - 100
+        player_map.body.x = player.body.x - 320
+        player_map.body.y = player.body.y - 320
 
-        scoreText.x = Math.floor((player.body.x + player.width / 2) - 450);
+        scoreText.x = Math.floor((player.body.x + player.width / 2) - 350);
         scoreText.y = Math.floor((player.body.y + player.height / 2) - 300);
 
-        clueText.x = Math.floor((player.body.x + player.width / 2) - 450);
+        clueText.x = Math.floor((player.body.x + player.width / 2) - 350);
         clueText.y = Math.floor((player.body.y + player.height / 2) + 200);
 
     }
@@ -592,5 +593,5 @@ function createGame(avatar) {
 // }
 
 let selected_avatar = document.getElementById('avatar').value;
-console.log(selected_avatar)
-document.getElementById('playButton').addEventListener('click', (evt) => createGame(selected_avatar));
+let selected_world = document.getElementById('world').value;
+document.getElementById('playButton').addEventListener('click', (evt) => createGame(selected_avatar, selected_world));
