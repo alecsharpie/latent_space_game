@@ -16,9 +16,13 @@ var name_of_sprite;
 
 var name_of_world;
 
-function createGame(avatar, world) {
+function createGame() {
+
+    let avatar = document.getElementById('avatar').value;
+    let world = document.getElementById('world').value;
 
     console.log(avatar)
+    console.log(world)
 
     var config = {
         parent: game_canvas_container,
@@ -592,6 +596,5 @@ function createGame(avatar, world) {
 //     }
 // }
 
-let selected_avatar = document.getElementById('avatar').value;
-let selected_world = document.getElementById('world').value;
-document.getElementById('playButton').addEventListener('click', (evt) => createGame(selected_avatar, selected_world));
+
+document.getElementById('playButton').addEventListener('click', (evt) => createGame());
