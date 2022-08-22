@@ -6,7 +6,7 @@ import latent_space_map from './assets/sac_latent_space_map.json';
 
 sessionStorage.setItem("latent_space_map", JSON.stringify(latent_space_map))
 
-if (localStorage.getItem('hiscore') != null) {
+if (localStorage.getItem('hiscore') !== null) {
     localStorage.setItem("hiscore", 0)
 }
 
@@ -319,7 +319,7 @@ function createGame() {
 
         scoreText = this.add.text(0, 0, 'SCORE: 0', style);
 
-        hiscore = JSON.parse(sessionStorage.getItem("hiscore"))
+        hiscore = JSON.parse(localStorage.getItem("hiscore"))
 
         hiscoreText = this.add.text(300, 0, 'HISCORE: ' + hiscore, style);
 
