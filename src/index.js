@@ -1,12 +1,12 @@
 import "./styles.css";
-import { data } from 'autoprefixer';
+// import { data } from 'autoprefixer';
 import latent_space_map from './assets/sac_latent_space_map.json';
 // import goal_img from './assets/goal.png';
 // import bg_img from './assets/latent_space_background_8bit.png';
 
 sessionStorage.setItem("latent_space_map", JSON.stringify(latent_space_map))
 
-if (localStorage.getItem('hiscore') === null) {
+if (localStorage.getItem("hiscore") === null) {
     localStorage.setItem("hiscore", 0)
 }
 
@@ -246,7 +246,7 @@ function createGame() {
         var signposts = this.physics.add.staticGroup();
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
-            signposts.create((map_data['X_' + name_of_world][i] * 4.1) + 450, (map_data['Y_' + name_of_world][i] * 4.1) + 450, 'signpost' + i).setOrigin(0, 0);
+            signposts.create((map_data['X_' + name_of_world][i] * 4.1) + 800, (map_data['Y_' + name_of_world][i] * 4.1) + 800, 'signpost' + i).setOrigin(0, 0);
             // console.log(map_data['image_paths'][i])
             // console.log(map_data['X_' + name_of_world][i] * 5)
             // console.log(map_data['Y_' + name_of_world][i] * 5)
@@ -290,8 +290,8 @@ function createGame() {
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: ((map_data['X_' + name_of_world][rand_int]) * 4.1) + 450,
-                y: ((map_data['Y_' + name_of_world][rand_int]) * 4.1) + 450
+                x: ((map_data['X_' + name_of_world][rand_int]) * 4.1) + 800,
+                y: ((map_data['Y_' + name_of_world][rand_int]) * 4.1) + 800
             }
         });
 
@@ -377,7 +377,7 @@ function createGame() {
 
 
         //  The miniCam
-        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.06).setName('mini');
+        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.08).setName('mini');
         this.minimap.setBackgroundColor(0x000000);
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;
@@ -393,9 +393,9 @@ function createGame() {
 
         // Follow cursor
 
-        this.input.on('pointerdown', function(pointer) {
-            this.physics.moveToObject(player, { x: pointer.worldX, y: pointer.worldY }, 240);
-        }, this);
+        // this.input.on('pointerdown', function(pointer) {
+        //     this.physics.moveToObject(player, { x: pointer.worldX, y: pointer.worldY }, 240);
+        // }, this);
 
         // Animations
 
@@ -501,26 +501,9 @@ function createGame() {
 
     function update() {
 
-        // let name_of_sprite = JSON.parse(sessionStorage.getItem("name_of_sprite"))
-
-        // console.log(name_of_sprite)
-
         player.body.setVelocity(0);
         player.anims.play('turn_' + name_of_sprite, true);
 
-        // if (this.input.mousePointer.isDown) {
-        //     //  400 is the speed it will move towards the mouse
-        //     this.physics.moveTo(player, this.scene.input.x + this.scene.cameras.main.scrollX, this.scene.input.y + this.scene.cameras.main.scrollY, null, 750);
-        // }
-        //  if it's overlapping the mouse, don't move any more
-        // if (Phaser.Rectangle.contains(sprite.body, game.input.x, game.input.y)) {
-        //     sprite.body.velocity.setTo(0, 0);
-        // }
-        // } else {
-        //     sprite.body.velocity.setTo(0, 0);
-        // }
-
-        // }
 
         //  Horizontal Movement
 
@@ -582,6 +565,7 @@ function createGame() {
 
         scoreText.x = Math.floor((player.body.x + player.width / 2) - 350);
         scoreText.y = Math.floor((player.body.y + player.height / 2) - 300);
+
         hiscoreText.x = Math.floor((player.body.x + player.width / 2) - 150);
         hiscoreText.y = Math.floor((player.body.y + player.height / 2) - 300);
 
