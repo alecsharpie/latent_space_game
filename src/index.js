@@ -246,7 +246,7 @@ function createGame() {
         var signposts = this.physics.add.staticGroup();
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
-            signposts.create((map_data['X_' + name_of_world][i] * 4.1) + 800, (map_data['Y_' + name_of_world][i] * 4.1) + 800, 'signpost' + i).setOrigin(0, 0);
+            signposts.create((map_data['X_' + name_of_world][i] * 3.5) + 800, (map_data['Y_' + name_of_world][i] * 3.5) + 800, 'signpost' + i).setOrigin(0, 0);
             // console.log(map_data['image_paths'][i])
             // console.log(map_data['X_' + name_of_world][i] * 5)
             // console.log(map_data['Y_' + name_of_world][i] * 5)
@@ -290,8 +290,8 @@ function createGame() {
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: ((map_data['X_' + name_of_world][rand_int]) * 4.1) + 800,
-                y: ((map_data['Y_' + name_of_world][rand_int]) * 4.1) + 800
+                x: ((map_data['X_' + name_of_world][rand_int]) * 3.5) + 800,
+                y: ((map_data['Y_' + name_of_world][rand_int]) * 3.5) + 800
             }
         });
 
@@ -377,7 +377,7 @@ function createGame() {
 
 
         //  The miniCam
-        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.08).setName('mini');
+        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.07).setName('mini');
         this.minimap.setBackgroundColor(0x000000);
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;
