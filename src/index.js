@@ -6,7 +6,7 @@ import latent_space_map from './assets/sac_latent_space_map.json';
 
 sessionStorage.setItem("latent_space_map", JSON.stringify(latent_space_map))
 
-if (localStorage.getItem('hiscore') !== null) {
+if (localStorage.getItem('hiscore') === null) {
     localStorage.setItem("hiscore", 0)
 }
 
@@ -246,10 +246,10 @@ function createGame() {
         var signposts = this.physics.add.staticGroup();
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
-            signposts.create(map_data['X_' + name_of_world][i] * 5, map_data['Y_' + name_of_world][i] * 5, 'signpost' + i).setOrigin(0, 0);
-            console.log(map_data['image_paths'][i])
-            console.log(map_data['X_' + name_of_world][i] * 5)
-            console.log(map_data['Y_' + name_of_world][i] * 5)
+            signposts.create((map_data['X_' + name_of_world][i] * 4.1) + 450, (map_data['Y_' + name_of_world][i] * 4.1) + 450, 'signpost' + i).setOrigin(0, 0);
+            // console.log(map_data['image_paths'][i])
+            // console.log(map_data['X_' + name_of_world][i] * 5)
+            // console.log(map_data['Y_' + name_of_world][i] * 5)
         }
 
         console.log("after signpost loop")
@@ -290,8 +290,8 @@ function createGame() {
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: (map_data['X_' + name_of_world][rand_int]) * 5,
-                y: (map_data['Y_' + name_of_world][rand_int]) * 5
+                x: ((map_data['X_' + name_of_world][rand_int]) * 4.1) + 450,
+                y: ((map_data['Y_' + name_of_world][rand_int]) * 4.1) + 450
             }
         });
 
@@ -377,7 +377,7 @@ function createGame() {
 
 
         //  The miniCam
-        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.04).setName('mini');
+        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.06).setName('mini');
         this.minimap.setBackgroundColor(0x000000);
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;
