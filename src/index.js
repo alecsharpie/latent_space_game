@@ -6,6 +6,10 @@ import latent_space_map from './assets/sac_latent_space_map.json';
 
 sessionStorage.setItem("latent_space_map", JSON.stringify(latent_space_map))
 
+if (localStorage.getItem('hiscore') != null) {
+    localStorage.setItem("hiscore", 0)
+}
+
 // function importAll(r) {
 //     return r.keys().map(r);
 // }
@@ -17,6 +21,8 @@ var name_of_sprite;
 var name_of_world;
 
 function createGame() {
+
+    document.getElementById('game_canvas_container').innerHTML = "";
 
     let avatar = document.getElementById('avatar').value;
     let world = document.getElementById('world').value;
@@ -55,7 +61,9 @@ function createGame() {
     var game = new Phaser.Game(config);
 
     var score = 0;
+    var hiscore;
     var scoreText;
+    var hiscoreText;
     var clueText;
 
     var speed = 500;
@@ -99,6 +107,11 @@ function createGame() {
         });
 
         this.physics.add.overlap(player, goal, collectGoal, null, this);
+
+        if (score > localStorage.getItem('hiscore')) {
+            localStorage.setItem("hiscore", score)
+        }
+
 
     }
 
@@ -232,8 +245,6 @@ function createGame() {
 
         var signposts = this.physics.add.staticGroup();
 
-        // only take first 100
-
         for (var i = 0; i < map_data['image_paths'].length; i++) {
             signposts.create(map_data['X_' + name_of_world][i] * 5, map_data['Y_' + name_of_world][i] * 5, 'signpost' + i).setOrigin(0, 0);
             console.log(map_data['image_paths'][i])
@@ -308,6 +319,9 @@ function createGame() {
 
         scoreText = this.add.text(0, 0, 'SCORE: 0', style);
 
+        hiscore = JSON.parse(sessionStorage.getItem("hiscore"))
+
+        hiscoreText = this.add.text(300, 0, 'HISCORE: ' + hiscore, style);
 
         //Edges
 
@@ -363,12 +377,13 @@ function createGame() {
 
 
         //  The miniCam
-        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.03).setName('mini');
+        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.04).setName('mini');
         this.minimap.setBackgroundColor(0x000000);
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;
         this.minimap.ignore(bg);
         this.minimap.ignore(scoreText);
+        this.minimap.ignore(hiscoreText);
         this.minimap.ignore(clueText);
         this.minimap.ignore(player);
 
@@ -562,17 +577,13 @@ function createGame() {
             // player.anims.play('forward_' + name_of_sprite, false);
         }
 
-        // scoreText.x = Math.floor((player.x + player.width / 2) - 350);
-        // scoreText.y = Math.floor((player.y + player.height / 2) - 300);
-
-        // clueText.x = Math.floor((player.x + player.width / 2) - 350);
-        // clueText.y = Math.floor((player.y + player.height / 2) + 200);
-
         player_map.body.x = player.body.x - 320
         player_map.body.y = player.body.y - 320
 
         scoreText.x = Math.floor((player.body.x + player.width / 2) - 350);
         scoreText.y = Math.floor((player.body.y + player.height / 2) - 300);
+        hiscoreText.x = Math.floor((player.body.x + player.width / 2) - 150);
+        hiscoreText.y = Math.floor((player.body.y + player.height / 2) - 300);
 
         clueText.x = Math.floor((player.body.x + player.width / 2) - 350);
         clueText.y = Math.floor((player.body.y + player.height / 2) + 200);
