@@ -69,7 +69,6 @@ function createGame() {
     var speed = 500;
     var speedDiag = Math.round(speed * (1 / 1.44));
 
-    var num_goals = 1;
     var goal;
 
     var map_data;
@@ -160,30 +159,12 @@ function createGame() {
         // this.load.setBaseURL('http://localhost:3000')
         this.load.setBaseURL('https://storage.googleapis.com/latentspacemuseum/')
 
-        // this.load.json({
-        //     key: 'map',
-        //     url: 'assets/latent_space_map_semisimple.json'
-        // });
-
-        // let map_path = "http://localhost:3000/assets/latent_space_map_semisimple.json";
-
-        // fetch(map_path)
-        //     .then(function(resp) {
-        //         return resp.json()
-        //     })
-        //     .then(function(data) {
-        //         // APIresults(data);
-        //         sessionStorage.setItem("data", JSON.stringify(data));
-        //         console.log('Saved data in session storage')
-        //     })
-        //     .catch(function() {});
-
         map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
 
         console.log(map_data)
         console.log(map_data['image_paths'])
 
-        // let local_path = "http://localhost:3000/assets/artist_images_semisimple/"
+        // let local_path = "http://localhost:3000/assets/artist_images/"
         let gcp_bucket_path = "https://storage.googleapis.com/latentspacemuseum/"
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
@@ -192,12 +173,7 @@ function createGame() {
         }
 
         this.load.image('goal', 'assets/goal.png');
-        // this.load.image('logo', 'assets/logo.png');
         this.load.image('background', 'assets/latent_space_background_8bit.png');
-        // this.load.image('floor_grid', 'assets/108_colour_ 512_clip_2d_pca_trimmed.png');
-        // this.load.image('floor_grid', 'assets/volcano_background.png');
-        // this.load.image('horz_edge', 'assets/horz_platform_thin.png');
-        // this.load.image('vert_edge', 'assets/vert_platform_thin.png');
 
         this.load.spritesheet(
             'leafy_druid',
@@ -228,18 +204,18 @@ function createGame() {
         console.log('Getting Map data')
 
         let map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
-            // let all_map_data = {};
-            // map_data['image_paths'] = all_map_data['image_paths']
-            // map_data['X_coords'] = all_map_data['X_coords']
-            // map_data['Y_coords'] = all_map_data['Y_coords']
-
 
         console.log(map_data);
+
         console.log('Creating game')
 
         // Background
 
         let bg = this.add.tileSprite(0, 0, 10000, 10000, 'background').setScrollFactor(0.3);
+
+        //Edges
+
+        this.physics.world.setBounds(0, 0, bg.displayWidth, bg.displayHeight, true, true, true, false);
 
         // Signposts
 
@@ -247,9 +223,6 @@ function createGame() {
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
             signposts.create((map_data['X_' + name_of_world][i] * 10), (map_data['Y_' + name_of_world][i] * 10), 'signpost' + i).setOrigin(0, 0);
-            // console.log(map_data['image_paths'][i])
-            // console.log(map_data['X_' + name_of_world][i] * 5)
-            // console.log(map_data['Y_' + name_of_world][i] * 5)
         }
 
         console.log("after signpost loop")
@@ -266,72 +239,42 @@ function createGame() {
 
         // Clue & Goal
 
-        var style = {
-            font: "32px Arial",
-            fill: "#ffffff",
-            wordWrap: {
-                width: 800
-            },
-            align: "left",
-            backgroundColor: "#00000",
-            padding: 5,
-        };
+        // var style = {
+        //     font: "32px Arial",
+        //     fill: "#ffffff",
+        //     wordWrap: {
+        //         width: 800
+        //     },
+        //     align: "left",
+        //     backgroundColor: "#00000",
+        //     padding: 5,
+        // };
 
-        clueText = this.add.text(0, 0, "", style);
+        // clueText = this.add.text(0, 0, "", style);
 
-        let rand_int = getRandomInt(map_data['image_paths'].length)
-        let clue_path = map_data['image_paths'][rand_int]
-        clueText.setText('CLUE: ' + clue_path.replace(".png", "").replaceAll("_", " "))
+        // let rand_int = getRandomInt(map_data['image_paths'].length)
+        // let clue_path = map_data['image_paths'][rand_int]
+        // clueText.setText('CLUE: ' + clue_path.replace(".png", "").replaceAll("_", " "))
 
-        console.log(map_data['image_paths'].indexOf(clue_path))
-        console.log(rand_int)
+        // goal = this.physics.add.group({
+        //     key: 'goal',
+        //     repeat: 1,
+        //     setXY: {
+        //         x: ((map_data['X_' + name_of_world][rand_int]) * 10),
+        //         y: ((map_data['Y_' + name_of_world][rand_int]) * 10)
+        //     }
+        // });
 
-        goal = this.physics.add.group({
-            key: 'goal',
-            repeat: 1,
-            setXY: {
-                x: ((map_data['X_' + name_of_world][rand_int]) * 10),
-                y: ((map_data['Y_' + name_of_world][rand_int]) * 10)
-            }
-        });
+        // this.physics.add.overlap(player, goal, collectGoal, null, this);
 
-        // console.log('coords_rand')
+        // scoreText = this.add.text(0, 0, 'SCORE: 0', style);
 
-        // console.log((map_data['X_colour_coords'][rand_int]) * 100)
-        // console.log((map_data['Y_colour_coords'][rand_int]) * 100)
+        // hiscore = JSON.parse(localStorage.getItem("hiscore"))
 
-
-        // console.log(map_data['image_paths'].indexOf((map_data['X_coords'][rand_int])))
-        // console.log(map_data['image_paths'].indexOf((map_data['Y_coords'][rand_int])))
-
-        // console.log('coords_img')
-
-        // console.log((map_data['X_colour_coords'][map_data['image_paths'].indexOf(clue_path)]))
-        // console.log((map_data['Y_colour_coords'][map_data['image_paths'].indexOf(clue_path)]))
-        // console.log(map_data['image_paths'][map_data['image_paths'].indexOf(clue_path)]);
-
-
-        // console.log(map_data['image_paths'].length)
-        // console.log(map_data['X_colour_coords'].length)
-        // console.log(map_data['Y_colour_coords'].length)
-
-        this.physics.add.overlap(player, goal, collectGoal, null, this);
-
-        scoreText = this.add.text(0, 0, 'SCORE: 0', style);
-
-        hiscore = JSON.parse(localStorage.getItem("hiscore"))
-
-        hiscoreText = this.add.text(300, 0, 'HISCORE: ' + hiscore, style);
-
-        //Edges
-
-        this.physics.world.setBounds(0, 0, bg.displayWidth, bg.displayHeight, true, true, true, false);
+        // hiscoreText = this.add.text(300, 0, 'HISCORE: ' + hiscore, style);
 
         // platforms = this.physics.add.staticGroup();
-
         // let edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0)
-
-
         // t_edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0).setScale(10).refreshBody();
         // // scale = map_size_pixels / edge.displayWidth
         // // long_side = edge.displayWidth * scale
@@ -377,7 +320,7 @@ function createGame() {
 
 
         //  The miniCam
-        this.minimap = this.cameras.add(645, 5, 250, 250).setZoom(0.03).setName('mini');
+        this.minimap = this.cameras.add(645, 5, 250, 250).setZoom(0.01).setName('mini');
         this.minimap.setBackgroundColor(0x000000);
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;
@@ -512,8 +455,14 @@ function createGame() {
             player.anims.play('forward_' + name_of_sprite, false);
         }
 
-        // player.body.setVelocity(0);
-        // player.anims.play('turn_' + name_of_sprite, true);
+        if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
+            player.body.setVelocity(0);
+            player.anims.play('turn_' + name_of_sprite, true);
+        }
+
+
+
+        //
 
 
         player_map.body.x = player.body.x - 320
