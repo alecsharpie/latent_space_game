@@ -488,13 +488,4 @@ function createGame() {
 
 }
 
-// someObj.addEventListener('click', some_function(someVar));
-
-// var some_function = function(someVar) {
-//     return function curried_func(e) {
-//         // do something here
-//     }
-// }
-
-
 document.getElementById('playButton').addEventListener('click', (evt) => createGame());
