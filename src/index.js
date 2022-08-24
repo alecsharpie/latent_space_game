@@ -325,7 +325,7 @@ function createGame() {
 
         //Edges
 
-        this.physics.world.setBounds(450, 450, bg.displayWidth - 450, bg.displayHeight - 450, true, true, true, false);
+        this.physics.world.setBounds(0, 0, bg.displayWidth, bg.displayHeight, true, true, true, false);
 
         // platforms = this.physics.add.staticGroup();
 
@@ -377,7 +377,7 @@ function createGame() {
 
 
         //  The miniCam
-        this.minimap = this.cameras.add(595, 5, 300, 300).setZoom(0.07).setName('mini');
+        this.minimap = this.cameras.add(695, 5, 200, 200).setZoom(0.05).setName('mini');
         this.minimap.setBackgroundColor(0x000000);
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;
@@ -563,14 +563,14 @@ function createGame() {
         player_map.body.x = player.body.x - 320
         player_map.body.y = player.body.y - 320
 
-        scoreText.x = Math.floor((player.body.x + player.width / 2) - 350);
-        scoreText.y = Math.floor((player.body.y + player.height / 2) - 300);
+        // scoreText.x = Math.floor((player.body.x + player.width / 2) - 350);
+        // scoreText.y = Math.floor((player.body.y + player.height / 2) - 300);
 
-        hiscoreText.x = Math.floor((player.body.x + player.width / 2) - 150);
-        hiscoreText.y = Math.floor((player.body.y + player.height / 2) - 300);
+        // hiscoreText.x = Math.floor((player.body.x + player.width / 2) - 150);
+        // hiscoreText.y = Math.floor((player.body.y + player.height / 2) - 300);
 
-        clueText.x = Math.floor((player.body.x + player.width / 2) - 350);
-        clueText.y = Math.floor((player.body.y + player.height / 2) + 200);
+        // clueText.x = Math.floor((player.body.x + player.width / 2) - 350);
+        // clueText.y = Math.floor((player.body.y + player.height / 2) + 200);
 
     }
 
