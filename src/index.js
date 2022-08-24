@@ -377,7 +377,7 @@ function createGame() {
 
 
         //  The miniCam
-        this.minimap = this.cameras.add(695, 5, 200, 200).setZoom(0.05).setName('mini');
+        this.minimap = this.cameras.add(645, 5, 250, 250).setZoom(0.03).setName('mini');
         this.minimap.setBackgroundColor(0x000000);
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;
@@ -452,58 +452,10 @@ function createGame() {
 
         }
 
-        // this.anims.create({
-        //     key: 'forward_fire',
-        //     frames: this.anims.generateFrameNumbers('fire_wizard', {
-        //         frames: [0, 1, 2]
-        //     }),
-        //     frameRate: 12,
-        //     repeat: -1
-        // });
-
-        // this.anims.create({
-        //     key: 'left_fire',
-        //     frames: this.anims.generateFrameNumbers('fire_wizard', {
-        //         frames: [4, 5, 6]
-        //     }),
-        //     frameRate: 12,
-        //     repeat: -1
-        // });
-
-        // this.anims.create({
-        //     key: 'right_fire',
-        //     frames: this.anims.generateFrameNumbers('fire_wizard', {
-        //         frames: [8, 9, 10]
-        //     }),
-        //     frameRate: 12,
-        //     repeat: -1
-        // });
-
-        // this.anims.create({
-        //     key: 'back_fire',
-        //     frames: this.anims.generateFrameNumbers('fire_wizard', {
-        //         frames: [12, 13, 14]
-        //     }),
-        //     frameRate: 12,
-        //     repeat: -1
-        // });
-
-        // this.anims.create({
-        //     key: 'turn_fire',
-        //     frames: this.anims.generateFrameNumbers('fire_wizard', {
-        //         frames: [1]
-        //     }),
-        //     frameRate: 12
-        // });
-
         console.log("Game Created")
     }
 
     function update() {
-
-        player.body.setVelocity(0);
-        player.anims.play('turn_' + name_of_sprite, true);
-
 
         //  Horizontal Movement
 
@@ -536,29 +488,33 @@ function createGame() {
         if (cursors.left.isDown && cursors.up.isDown) {
             player.setVelocityX(-speedDiag);
             player.setVelocityY(-speedDiag);
-            // player.anims.play('back_' + name_of_sprite, false);
+            player.anims.play('back_' + name_of_sprite, false);
         }
 
         // Up and right
         if (cursors.right.isDown && cursors.up.isDown) {
             player.setVelocityX(speedDiag);
             player.setVelocityY(-speedDiag);
-            // player.anims.play('back_' + name_of_sprite, false);
+            player.anims.play('back_' + name_of_sprite, false);
         }
 
         // Down and right
         if (cursors.right.isDown && cursors.down.isDown) {
             player.setVelocityX(speedDiag);
             player.setVelocityY(speedDiag);
-            // player.anims.play('forward_' + name_of_sprite, false);
+            player.anims.play('forward_' + name_of_sprite, false);
         }
 
         // Down and left
         if (cursors.left.isDown && cursors.down.isDown) {
             player.setVelocityX(-speedDiag);
             player.setVelocityY(speedDiag);
-            // player.anims.play('forward_' + name_of_sprite, false);
+            player.anims.play('forward_' + name_of_sprite, false);
         }
+
+        // player.body.setVelocity(0);
+        // player.anims.play('turn_' + name_of_sprite, true);
+
 
         player_map.body.x = player.body.x - 320
         player_map.body.y = player.body.y - 320

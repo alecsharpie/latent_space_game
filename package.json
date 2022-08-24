@@ -4,7 +4,7 @@
     "description": "A Phaser 3 Project Template",
     "main": "src/index.html",
     "scripts": {
-        "deploy": "gsutil cp -r dist gs://www.latentspacegame.com",
+        "deploy": "gsutil cp -r dist gs://latentspacemuseum",
         "build": "rm -r dist && webpack --config webpack/prod.js",
         "start": "webpack-dev-server --config webpack/base.js --open"
     },
