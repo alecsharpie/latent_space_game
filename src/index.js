@@ -1,6 +1,6 @@
 import "./styles.css";
 // import { data } from 'autoprefixer';
-import latent_space_map from './assets/sac_latent_space_map.json';
+import latent_space_map from './assets/sac_captions_latent_space_map.json';
 // import goal_img from './assets/goal.png';
 // import bg_img from './assets/latent_space_background_8bit.png';
 
@@ -158,7 +158,7 @@ function createGame() {
         });
 
         // this.load.setBaseURL('http://localhost:3000')
-        this.load.setBaseURL('https://storage.googleapis.com/www.latentspacegame.com/')
+        this.load.setBaseURL('https://storage.googleapis.com/latentspacemuseum/')
 
         // this.load.json({
         //     key: 'map',
@@ -184,10 +184,10 @@ function createGame() {
         console.log(map_data['image_paths'])
 
         // let local_path = "http://localhost:3000/assets/artist_images_semisimple/"
-        let gcp_bucket_path = "https://storage.googleapis.com/www.latentspacegame.com/"
+        let gcp_bucket_path = "https://storage.googleapis.com/latentspacemuseum/"
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
-            let image_path = gcp_bucket_path + 'sac_images_subset/' + map_data['image_paths'][i];
+            let image_path = gcp_bucket_path + 'sac_images_captions_subset/' + map_data['image_paths'][i];
             this.load.image('signpost' + i, encodeURI(image_path));
         }
 
@@ -239,14 +239,14 @@ function createGame() {
 
         // Background
 
-        let bg = this.add.tileSprite(0, 0, 5000, 5000, 'background').setScrollFactor(0.3);
+        let bg = this.add.tileSprite(0, 0, 10000, 10000, 'background').setScrollFactor(0.3);
 
         // Signposts
 
         var signposts = this.physics.add.staticGroup();
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
-            signposts.create((map_data['X_' + name_of_world][i] * 3.5) + 800, (map_data['Y_' + name_of_world][i] * 3.5) + 800, 'signpost' + i).setOrigin(0, 0);
+            signposts.create((map_data['X_' + name_of_world][i] * 10), (map_data['Y_' + name_of_world][i] * 10), 'signpost' + i).setOrigin(0, 0);
             // console.log(map_data['image_paths'][i])
             // console.log(map_data['X_' + name_of_world][i] * 5)
             // console.log(map_data['Y_' + name_of_world][i] * 5)
@@ -256,7 +256,7 @@ function createGame() {
 
         // Player & Cursor
 
-        player = this.physics.add.sprite(2500, 2500, name_of_sprite).setScale(1);
+        player = this.physics.add.sprite(5000, 5000, name_of_sprite).setScale(1);
 
         player.body.setCollideWorldBounds(true);
 
@@ -290,8 +290,8 @@ function createGame() {
             key: 'goal',
             repeat: 1,
             setXY: {
-                x: ((map_data['X_' + name_of_world][rand_int]) * 3.5) + 800,
-                y: ((map_data['Y_' + name_of_world][rand_int]) * 3.5) + 800
+                x: ((map_data['X_' + name_of_world][rand_int]) * 10),
+                y: ((map_data['Y_' + name_of_world][rand_int]) * 10)
             }
         });
 
