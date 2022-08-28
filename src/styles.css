@@ -11,21 +11,22 @@
 }
 
 h1 {
-    color: #36454F;
+    color: white;
     padding-left: 10px;
+    font-size: 72px;
 }
 
 button,
 button::after {
-    width: 190px;
-    height: 43px;
+    width: 240px;
+    height: 80px;
     font-size: 36px;
     font-family: 'Bebas Neue';
-    /* background: linear-gradient(45deg, transparent 5%, #FF013C 5%); */
+    background: linear-gradient(45deg, transparent 5%, #36454F 5%);
     border: 0;
     color: #36454F;
     letter-spacing: 3px;
-    line-height: 88px;
+    line-height: 44px;
     box-shadow: 6px 0px 0px #808080;
     outline: transparent;
     position: relative;
