@@ -21,7 +21,7 @@ button::after {
     width: 240px;
     height: 80px;
     font-size: 36px;
-    font-family: 'Bebas Neue';
+    font-family: 'Bebas Neue', sans-serif;
     background: linear-gradient(45deg, transparent 5%, #36454F 5%);
     border: 0;
     color: #36454F;
