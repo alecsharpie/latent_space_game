@@ -320,7 +320,7 @@ function createGame() {
 
 
         //  The miniCam
-        this.minimap = this.cameras.add(645, 5, 250, 250).setZoom(0.01).setName('mini');
+        this.minimap = this.cameras.add(645, 5, 250, 250).setZoom(0.03).setName('mini');
         this.minimap.setBackgroundColor(0x000000);
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;

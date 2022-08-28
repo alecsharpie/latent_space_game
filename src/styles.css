@@ -1,6 +1,6 @@
 #game_canvas_container {
-    min-width: 900px;
-    min-height: 600px;
+    width: 900px;
+    height: 600px;
     /* margin: auto; */
     border: 1px solid black;
     /* background-color: white; */
@@ -8,6 +8,11 @@
 
 .title-container {
     background-image: url("https://storage.googleapis.com/latentspacemuseum/assets/doorway.png");
+}
+
+h1 {
+    color: white;
+    padding-left: 10px
 }
 
 
