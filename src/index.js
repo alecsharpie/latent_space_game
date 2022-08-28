@@ -314,7 +314,6 @@ function createGame() {
 
         console.log("after camera")
 
-
         //  The miniCam
         this.minimap = this.cameras.add(645, 5, 250, 250).setZoom(0.02).setName('mini');
         this.minimap.setBackgroundColor(0x000000);

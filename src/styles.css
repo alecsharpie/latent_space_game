@@ -11,24 +11,22 @@
 }
 
 h1 {
-    color: white;
+    color: #36454F;
     padding-left: 10px;
-    -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: black;
 }
 
 button,
 button::after {
-    width: 380px;
-    height: 86px;
+    width: 190px;
+    height: 43px;
     font-size: 36px;
-    font-family: 'Bebas Neue', cursive;
-    background: linear-gradient(45deg, transparent 5%, #FF013C 5%);
+    font-family: 'Bebas Neue';
+    /* background: linear-gradient(45deg, transparent 5%, #FF013C 5%); */
     border: 0;
-    color: #fff;
+    color: #36454F;
     letter-spacing: 3px;
     line-height: 88px;
-    box-shadow: 6px 0px 0px #00E6F6;
+    box-shadow: 6px 0px 0px #808080;
     outline: transparent;
     position: relative;
 }
@@ -47,8 +45,8 @@ button::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #FF013C 5%);
-    text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
+    background: linear-gradient(45deg, transparent 3%, #808080 3%, #808080 5%, #36454F 5%);
+    text-shadow: -3px -3px 0px #36454F, 3px 3px 0px #808080;
     clip-path: var(--slice-0);
 }
 
