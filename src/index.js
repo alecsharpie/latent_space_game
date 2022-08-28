@@ -1,9 +1,5 @@
 import "./styles.css";
-// import { data } from 'autoprefixer';
 import latent_space_map from './assets/sac_captions_latent_space_map.json';
-// import goal_img from './assets/goal.png';
-// import bg_img from './assets/latent_space_background_8bit.png';
-
 sessionStorage.setItem("latent_space_map", JSON.stringify(latent_space_map))
 
 if (localStorage.getItem("hiscore") === null) {
