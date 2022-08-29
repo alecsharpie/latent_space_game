@@ -6,6 +6,8 @@
     /* background-color: white; */
 }
 
+
+/*
 .title-container {
     background-image: url("https://storage.googleapis.com/latentspacemuseum/assets/doorway.png");
 }
@@ -101,55 +103,4 @@ button:hover::after {
         clip-path: var(--slice-1);
         transform: translate(0);
     }
-}
-
-
-/* .container-fluid {
-    background-color: white;
-    min-width: 900;
-    min-height: 600;
-} */
-
-
-/* body {
-    background-color: #37a888;
-    background-color: lightblue;
-    min-height: 700px;
-} */
-
-
-/* background-repeat: repeat;
-background-image: url("https://upload.wikimedia.org/wikipedia/commons/2/25/Circuit_faded.png"); */
-
-
-/*
-    background-position: calc(100% + 50px) calc(100% + 50px); } */
-
-
-/* h1 {
-    background-color: rgba(255, 255, 255, 0.3);
-    color: #FFFFFF;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-    border-top: 2px solid rgba(0, 0, 0, 0.2);
-    text-align: center;
-} */
-
-
-/* label {
-    color: #FFF
-} */
-
-
-/* select {
-    background-color: rgba(200, 200, 200);
-    color: #FFF
-} */
-
-
-/* a {
-    font-size: 0.6em;
-}
-
-p {
-    font-size: 0.6em;
 } */
