@@ -397,25 +397,25 @@ function createGame() {
 
         //  Horizontal Movement
 
-        if (cursors.left.isDown) {
+        if (this.cursors.left.isDown) {
 
             player.setVelocityX(-speed);
             player.anims.play('left_' + name_of_sprite, true);
         }
 
-        if (cursors.right.isDown) {
+        if (this.cursors.right.isDown) {
             player.setVelocityX(speed);
             player.anims.play('right_' + name_of_sprite, true);
         }
 
         //  Vertical Movement
 
-        if (cursors.up.isDown) {
+        if (this.cursors.up.isDown) {
             player.setVelocityY(-speed);
             player.anims.play('back_' + name_of_sprite, true);
         }
 
-        if (cursors.down.isDown) {
+        if (this.cursors.down.isDown) {
             player.setVelocityY(speed);
             player.anims.play('forward_' + name_of_sprite, true);
         }

@@ -22,12 +22,12 @@ button::after {
     height: 80px;
     font-size: 36px;
     font-family: 'Bebas Neue', sans-serif;
-    background: linear-gradient(45deg, transparent 5%, #36454F 5%);
+    background: linear-gradient(45deg, transparent 5%, #403E3F 5%);
     border: 0;
-    color: #36454F;
+    color: #909090;
     letter-spacing: 3px;
     line-height: 44px;
-    box-shadow: 6px 0px 0px #808080;
+    box-shadow: 6px 0px 0px #909090;
     outline: transparent;
     position: relative;
 }
@@ -39,15 +39,15 @@ button::after {
     --slice-3: inset(10% -6px 85% 0);
     --slice-4: inset(40% -6px 43% 0);
     --slice-5: inset(80% -6px 5% 0);
-    content: 'Play';
+    content: 'Enter';
     display: block;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 3%, #808080 3%, #808080 5%, #36454F 5%);
-    text-shadow: -3px -3px 0px #36454F, 3px 3px 0px #808080;
+    background: linear-gradient(45deg, transparent 3%, #909090 3%, #909090 5%, #403E3F 5%);
+    text-shadow: -3px -3px 0px #403E3F, 3px 3px 0px #909090;
     clip-path: var(--slice-0);
 }
 
