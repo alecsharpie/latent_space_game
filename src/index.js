@@ -406,19 +406,19 @@ function createGame() {
             player.anims.play('left_' + name_of_sprite, true);
         }
 
-        if (this.cursors.right.isDown) {
+        if (cursors.right.isDown) {
             player.setVelocityX(speed);
             player.anims.play('right_' + name_of_sprite, true);
         }
 
         //  Vertical Movement
 
-        if (this.cursors.up.isDown) {
+        if (cursors.up.isDown) {
             player.setVelocityY(-speed);
             player.anims.play('back_' + name_of_sprite, true);
         }
 
-        if (this.cursors.down.isDown) {
+        if (cursors.down.isDown) {
             player.setVelocityY(speed);
             player.anims.play('forward_' + name_of_sprite, true);
         }
