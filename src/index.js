@@ -453,10 +453,10 @@ function createGame() {
             player.anims.play('forward_' + name_of_sprite, false);
         }
 
-        // if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
-        //     player.body.setVelocity(0);
-        //     player.anims.play('turn_' + name_of_sprite, true);
-        // }
+        if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
+            player.body.setVelocity(0);
+            player.anims.play('turn_' + name_of_sprite, true);
+        }
 
 
 
