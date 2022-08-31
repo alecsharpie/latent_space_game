@@ -403,24 +403,24 @@ function createGame() {
         if (cursors.left.isDown) {
 
             player.setVelocityX(-speed);
-            player.anims.play('left_' + name_of_sprite, true);
+            // player.anims.play('left_' + name_of_sprite, true);
         }
 
         if (cursors.right.isDown) {
             player.setVelocityX(speed);
-            player.anims.play('right_' + name_of_sprite, true);
+            // player.anims.play('right_' + name_of_sprite, true);
         }
 
         //  Vertical Movement
 
         if (cursors.up.isDown) {
             player.setVelocityY(-speed);
-            player.anims.play('back_' + name_of_sprite, true);
+            // player.anims.play('back_' + name_of_sprite, true);
         }
 
         if (cursors.down.isDown) {
             player.setVelocityY(speed);
-            player.anims.play('forward_' + name_of_sprite, true);
+            // player.anims.play('forward_' + name_of_sprite, true);
         }
 
         // Diagonal movement
