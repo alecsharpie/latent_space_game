@@ -320,9 +320,9 @@ function createGame() {
         this.minimap.scrollX = bg.displayWidth / 2;
         this.minimap.scrollY = bg.displayWidth / 2;
         this.minimap.ignore(bg);
-        this.minimap.ignore(scoreText);
-        this.minimap.ignore(hiscoreText);
-        this.minimap.ignore(clueText);
+        // this.minimap.ignore(scoreText);
+        // this.minimap.ignore(hiscoreText);
+        // this.minimap.ignore(clueText);
         this.minimap.ignore(player);
 
 
@@ -395,9 +395,12 @@ function createGame() {
 
     function update() {
 
+        // player.body.setVelocity(0);
+        // player.anims.play('turn_' + name_of_sprite, true);
+
         //  Horizontal Movement
 
-        if (this.cursors.left.isDown) {
+        if (cursors.left.isDown) {
 
             player.setVelocityX(-speed);
             player.anims.play('left_' + name_of_sprite, true);

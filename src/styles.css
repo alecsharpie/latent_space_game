@@ -6,8 +6,6 @@
     /* background-color: white; */
 }
 
-
-/*
 .title-container {
     background-image: url("https://storage.googleapis.com/latentspacemuseum/assets/doorway.png");
 }
@@ -103,4 +101,4 @@ button:hover::after {
         clip-path: var(--slice-1);
         transform: translate(0);
     }
-} */
+}
