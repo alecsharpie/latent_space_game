@@ -50,8 +50,6 @@ function createGame() {
     name_of_sprite = avatar;
     name_of_world = world;
 
-    console.log(name_of_sprite)
-
     // sessionStorage.setItem("name_of_sprite", name_of_sprite)
 
     var game = new Phaser.Game(config);
@@ -68,8 +66,6 @@ function createGame() {
     var goal;
 
     var map_data;
-
-    console.log(game);
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
@@ -90,7 +86,6 @@ function createGame() {
         // map_data['Y_coords'] = all_map_data['Y_coords']
 
         let rand_int = getRandomInt(map_data['image_paths'].length)
-        console.log(rand_int)
         clueText.setText("CLUE: " + map_data['image_paths'][rand_int].replace(".png", "").replaceAll("_", " "))
         goal = this.physics.add.group({
             key: 'goal',
@@ -128,7 +123,7 @@ function createGame() {
 
     function preload() {
 
-        console.log('preload');
+        console.log('Pre-Loading Game...');
 
         var progressBar = this.add.graphics();
         var progressBox = this.add.graphics();
@@ -136,17 +131,13 @@ function createGame() {
         progressBox.fillRect(290, 275, 320, 50);
 
         this.load.on('progress', function(value) {
-            // console.log(value);
             progressBar.clear();
             progressBar.fillStyle(0x00FF00, 1);
             progressBar.fillRect(300, 285, 300 * value, 30);
         });
 
-        this.load.on('fileprogress', function(file) {
-            // console.log(file.src);
-        });
+        this.load.on('fileprogress', function(file) {});
         this.load.on('complete', function() {
-            // console.log('complete');
             progressBar.destroy();
             progressBox.destroy();
 
@@ -157,10 +148,7 @@ function createGame() {
 
         map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
 
-        console.log(map_data)
-        console.log(map_data['image_paths'])
-
-        // let local_path = "http://localhost:3000/assets/artist_images/"
+        // let local_path = "http://localhost:3000"
         let gcp_bucket_path = "https://storage.googleapis.com/latentspacemuseum/"
 
         for (var i = 0; i < map_data['image_paths'].length; i++) {
@@ -197,13 +185,9 @@ function createGame() {
 
     function create() {
 
-        console.log('Getting Map data')
+        console.log('Creating game...')
 
         let map_data = JSON.parse(sessionStorage.getItem("latent_space_map"))
-
-        console.log(map_data);
-
-        console.log('Creating game')
 
         // Background
 
@@ -221,8 +205,6 @@ function createGame() {
             signposts.create((map_data['X_' + name_of_world][i] * 10), (map_data['Y_' + name_of_world][i] * 10), 'signpost' + i).setOrigin(0, 0);
         }
 
-        console.log("after signpost loop")
-
         // Player & Cursor
 
         player = this.physics.add.sprite(5000, 5000, name_of_sprite).setScale(1);
@@ -230,8 +212,6 @@ function createGame() {
         player.body.setCollideWorldBounds(true);
 
         cursors = this.input.keyboard.createCursorKeys();
-
-        console.log("after player")
 
         // Clue & Goal
 
@@ -281,9 +261,6 @@ function createGame() {
         // r_edge = platforms.create(bg.displayWidth - 50, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
 
 
-        // console.log("after platforms")
-
-
         //Goal
 
         // goal = this.physics.add.group({
@@ -299,7 +276,6 @@ function createGame() {
         //     fontSize: '32px',
         //     fill: '#FFF'
         // }
-        console.log("after goal")
 
 
         // Camera
@@ -311,8 +287,6 @@ function createGame() {
         player_map = this.physics.add.sprite(2500, 2500, name_of_sprite).setScale(10);
 
         this.cameras.main.ignore(player_map);
-
-        console.log("after camera")
 
         //  The miniCam
         this.minimap = this.cameras.add(645, 5, 250, 250).setZoom(0.02).setName('mini');
@@ -326,9 +300,6 @@ function createGame() {
         this.minimap.ignore(player);
 
 
-        console.log("after mini-camera")
-
-
         // Follow cursor
 
         // this.input.on('pointerdown', function(pointer) {
@@ -340,9 +311,6 @@ function createGame() {
         var char_list = ['fire_wizard', 'leafy_druid'];
 
         for (var i = 0; i < char_list.length; i++) {
-
-            console.log(char_list)
-            console.log(char_list[i])
 
             this.anims.create({
                 key: 'forward_' + char_list[i],
@@ -390,7 +358,7 @@ function createGame() {
 
         }
 
-        console.log("Game Created")
+        console.log("Game Created!")
     }
 
     function update() {
@@ -398,29 +366,9 @@ function createGame() {
         // player.body.setVelocity(0);
         // player.anims.play('turn_' + name_of_sprite, true);
 
-        //  Horizontal Movement
-
-        if (cursors.left.isDown) {
-
-            player.setVelocityX(-speed);
-            // player.anims.play('left_' + name_of_sprite, true);
-        }
-
-        if (cursors.right.isDown) {
-            player.setVelocityX(speed);
-            // player.anims.play('right_' + name_of_sprite, true);
-        }
-
-        //  Vertical Movement
-
-        if (cursors.up.isDown) {
-            player.setVelocityY(-speed);
-            // player.anims.play('back_' + name_of_sprite, true);
-        }
-
-        if (cursors.down.isDown) {
-            player.setVelocityY(speed);
-            // player.anims.play('forward_' + name_of_sprite, true);
+        if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
+            player.body.setVelocity(0);
+            player.anims.play('turn_' + name_of_sprite, true);
         }
 
         // Diagonal movement
@@ -453,9 +401,29 @@ function createGame() {
             player.anims.play('forward_' + name_of_sprite, false);
         }
 
-        if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
-            player.body.setVelocity(0);
-            player.anims.play('turn_' + name_of_sprite, true);
+        //  Horizontal Movement
+
+        if (cursors.left.isDown) {
+
+            player.setVelocityX(-speed);
+            // player.anims.play('left_' + name_of_sprite, true);
+        }
+
+        if (cursors.right.isDown) {
+            player.setVelocityX(speed);
+            // player.anims.play('right_' + name_of_sprite, true);
+        }
+
+        //  Vertical Movement
+
+        if (cursors.up.isDown) {
+            player.setVelocityY(-speed);
+            // player.anims.play('back_' + name_of_sprite, true);
+        }
+
+        if (cursors.down.isDown) {
+            player.setVelocityY(speed);
+            // player.anims.play('forward_' + name_of_sprite, true);
         }
 
 
