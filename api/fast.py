@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 
 app = FastAPI()
@@ -16,6 +17,13 @@ app.add_middleware(
 
 
 app.mount("/", StaticFiles(directory="dist", html=True), name="dist")
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
+
+
+@app.get('/favicon.ico')
+async def favicon():
+    return FileResponse('static/favicon.ico')
+
 
 # api_app = FastAPI(title="api app")
 

@@ -5,6 +5,7 @@ RUN pip install -U pip
 RUN pip install -r requirements.txt
 
 COPY dist/ dist/
+COPY static/ static/
 COPY api/ api/
 
 
