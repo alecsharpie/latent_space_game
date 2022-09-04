@@ -17,7 +17,7 @@ app.add_middleware(
 
 
 app.mount("/", StaticFiles(directory="dist", html=True), name="dist")
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+app.mount("/", StaticFiles(directory="static"), name="static")
 
 
 @app.get('/favicon.ico')
