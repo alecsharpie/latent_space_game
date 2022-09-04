@@ -177,8 +177,7 @@ function createGame() {
     var cursors;
     var player;
     var player_map;
-    var x_start_point = 500;
-    var y_start_point = 500;
+
 
     // var name_of_sprite = 'fire_wizard';
     // var name_of_sprite = avatar;
@@ -284,7 +283,7 @@ function createGame() {
 
         this.cameras.main.startFollow(player);
 
-        player_map = this.physics.add.sprite(2500, 2500, name_of_sprite).setScale(10);
+        player_map = this.physics.add.sprite(5000, 5000, name_of_sprite).setScale(10);
 
         this.cameras.main.ignore(player_map);
 
@@ -366,64 +365,64 @@ function createGame() {
         // player.body.setVelocity(0);
         // player.anims.play('turn_' + name_of_sprite, true);
 
-        if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
-            player.body.setVelocity(0);
-            player.anims.play('turn_' + name_of_sprite, true);
-        }
+        // if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
+        //     player.body.setVelocity(0);
+        //     player.anims.play('turn_' + name_of_sprite, true);
+        // }
 
         // Diagonal movement
         // Up and left
 
-        if (cursors.left.isDown && cursors.up.isDown) {
-            player.setVelocityX(-speedDiag);
-            player.setVelocityY(-speedDiag);
-            player.anims.play('back_' + name_of_sprite, false);
-        }
+        // if (cursors.left.isDown && cursors.up.isDown) {
+        //     player.setVelocityX(-speedDiag);
+        //     player.setVelocityY(-speedDiag);
+        //     player.anims.play('back_' + name_of_sprite, false);
+        // }
 
-        // Up and right
-        if (cursors.right.isDown && cursors.up.isDown) {
-            player.setVelocityX(speedDiag);
-            player.setVelocityY(-speedDiag);
-            player.anims.play('back_' + name_of_sprite, false);
-        }
+        // // Up and right
+        // if (cursors.right.isDown && cursors.up.isDown) {
+        //     player.setVelocityX(speedDiag);
+        //     player.setVelocityY(-speedDiag);
+        //     player.anims.play('back_' + name_of_sprite, false);
+        // }
 
-        // Down and right
-        if (cursors.right.isDown && cursors.down.isDown) {
-            player.setVelocityX(speedDiag);
-            player.setVelocityY(speedDiag);
-            player.anims.play('forward_' + name_of_sprite, false);
-        }
+        // // Down and right
+        // if (cursors.right.isDown && cursors.down.isDown) {
+        //     player.setVelocityX(speedDiag);
+        //     player.setVelocityY(speedDiag);
+        //     player.anims.play('forward_' + name_of_sprite, false);
+        // }
 
-        // Down and left
-        if (cursors.left.isDown && cursors.down.isDown) {
-            player.setVelocityX(-speedDiag);
-            player.setVelocityY(speedDiag);
-            player.anims.play('forward_' + name_of_sprite, false);
-        }
+        // // Down and left
+        // if (cursors.left.isDown && cursors.down.isDown) {
+        //     player.setVelocityX(-speedDiag);
+        //     player.setVelocityY(speedDiag);
+        //     player.anims.play('forward_' + name_of_sprite, false);
+        // }
 
         //  Horizontal Movement
 
         if (cursors.left.isDown) {
 
             player.setVelocityX(-speed);
-            // player.anims.play('left_' + name_of_sprite, true);
+            player.anims.play('left_' + name_of_sprite, true);
         }
 
         if (cursors.right.isDown) {
             player.setVelocityX(speed);
-            // player.anims.play('right_' + name_of_sprite, true);
+            player.anims.play('right_' + name_of_sprite, true);
         }
 
         //  Vertical Movement
 
         if (cursors.up.isDown) {
             player.setVelocityY(-speed);
-            // player.anims.play('back_' + name_of_sprite, true);
+            player.anims.play('back_' + name_of_sprite, true);
         }
 
         if (cursors.down.isDown) {
             player.setVelocityY(speed);
-            // player.anims.play('forward_' + name_of_sprite, true);
+            player.anims.play('forward_' + name_of_sprite, true);
         }
 
 

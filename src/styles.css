@@ -7,7 +7,7 @@
 }
 
 .title-container {
-    background-image: url("https://storage.googleapis.com/latentspacemuseum/assets/doorway.png");
+    background-image: url("https://storage.googleapis.com/latentspacemuseum/assets/nav_bg.png");
 }
 
 h1 {
@@ -16,18 +16,22 @@ h1 {
     font-size: 72px;
 }
 
+body {
+    background-color: black;
+}
+
 button,
 button::after {
     width: 240px;
     height: 80px;
     font-size: 36px;
     font-family: 'Bebas Neue', sans-serif;
-    background: linear-gradient(45deg, transparent 5%, #403E3F 5%);
+    background: linear-gradient(45deg, transparent 5%, #deb401 5%);
     border: 0;
-    color: #909090;
+    color: #00629e;
     letter-spacing: 3px;
     line-height: 44px;
-    box-shadow: 6px 0px 0px #909090;
+    box-shadow: 6px 0px 0px #00629e;
     outline: transparent;
     position: relative;
 }
@@ -46,8 +50,8 @@ button::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 3%, #909090 3%, #909090 5%, #403E3F 5%);
-    text-shadow: -3px -3px 0px #403E3F, 3px 3px 0px #909090;
+    background: linear-gradient(45deg, transparent 3%, #deb401 3%, #00629e 5%, #f33f05 5%);
+    text-shadow: -3px -3px 0px #f33f05, 3px 3px 0px #00629e;
     clip-path: var(--slice-0);
 }
 
