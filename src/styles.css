@@ -1,8 +1,8 @@
 #game_canvas_container {
-    width: 900px;
+    width: 80%;
     height: 600px;
     /* margin: auto; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
     /* background-color: white; */
 }
 
@@ -14,6 +14,7 @@ h1 {
     color: white;
     padding-left: 10px;
     font-size: 72px;
+    text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
 }
 
 body {
@@ -29,9 +30,10 @@ body {
     /* Standard syntax (must be last) */
 }
 
-.col-3 {
+.col-2 {
     border: 1px solid black;
-    padding: 20px;
+    padding: 10px;
+    margin: 5px;
     text-align: center;
 }
 
@@ -49,7 +51,7 @@ body {
     background: linear-gradient(-90deg, #f33f05, #deb401, #00629e);
     /* Standard syntax (must be last) */
     color: #ffffff;
-    padding: 10px, 20px, 10px, 20px;
+    padding: 10px, 30px, 10px, 30px;
     font-size: 2.5em;
     font-weight: bold;
 }

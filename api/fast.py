@@ -17,12 +17,11 @@ app.add_middleware(
 
 
 app.mount("/", StaticFiles(directory="dist", html=True), name="dist")
-app.mount("/", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-
-@app.get('/favicon.ico')
-async def favicon():
-    return FileResponse('static/favicon.ico')
+# @app.get('/favicon.ico')
+# async def favicon():
+#     return FileResponse('static/favicon.ico')
 
 
 # api_app = FastAPI(title="api app")

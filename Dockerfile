@@ -8,5 +8,4 @@ COPY dist/ dist/
 COPY static/ static/
 COPY api/ api/
 
-
 CMD uvicorn api.fast:app --port $PORT --host 0.0.0.0
