@@ -1,6 +1,6 @@
 #game_canvas_container {
-    width: 80%;
-    height: 600px;
+    width: 100%;
+    /* height: 600px; */
     margin: 5px;
     /* margin: auto; */
     /* border: 1px solid black; */
@@ -11,21 +11,24 @@
     text-align: center;
     width: 100%;
     /* height: 600px; */
-    margin: 5px;
+    margin: 5px 5px 5px 10px;
+    padding: 10px;
     /* margin: auto; */
     border: 1px solid black;
-    background-color: white;
+    /* background-color: white; */
 }
 
-.title-container {
+
+/* #title-container {
     background-image: url("https://storage.googleapis.com/latentspacemuseum/assets/nav_bg.png");
-}
+} */
 
 h1 {
     color: white;
     padding-left: 10px;
     font-size: 72px;
-    text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+    /* text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black; */
+    text-shadow: 1px 1px #00629e, 2px 2px #387777, 3px 3px #6F8B50, 4px 4px #A7A028, 5px 5px #deb401, 6px 6px #E39702, 7px 7px #E97A03, 8px 8px #EE5C04, 9px 9px #f33f05;
 }
 
 body {
@@ -77,13 +80,13 @@ select {
     border-radius: 10px;
     background: #f33f05;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#f33f05, #deb401);
+    background: -webkit-linear-gradient(-90deg, #f33f05, #deb401, #00629e);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#f33f05, #deb401);
+    background: -o-linear-gradient(-90deg, #f33f05, #deb401, #00629e);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#f33f05, #deb401);
+    background: -moz-linear-gradient(-90deg, #f33f05, #deb401, #00629e);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#f33f05, #deb401);
+    background: linear-gradient(-90deg, #f33f05, #deb401, #00629e);
     /* Standard syntax (must be last) */
     color: #ffffff;
 }
@@ -118,9 +121,10 @@ p {
     font-size: 1em;
 }
 
-#my-link {
+
+/* #my-link {
     color: #ffffff;
     padding: 5px;
     margin: 0px;
     font-size: 1.2em;
-}
+} */

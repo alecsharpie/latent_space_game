@@ -363,7 +363,7 @@ function createGame() {
     function update() {
 
         player.body.setVelocity(0);
-        player.anims.play('turn_' + name_of_sprite, true);
+        // player.anims.play('turn_' + name_of_sprite, true);
 
         //  Horizontal Movement
 

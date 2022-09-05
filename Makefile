@@ -23,7 +23,7 @@ run:
 	docker run -e PORT=8000 -p 8080:8000 asia.gcr.io/alecsharpie/latentspacemuseum
 
 # Hop inside my shell
-docker_interactive:
+run_interactive:
 	docker run -e PORT=8000 -p 8080:8000 -it asia.gcr.io/alecsharpie/latentspacemuseum sh
 
 # Pushes to container registry (gcp)
