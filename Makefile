@@ -32,7 +32,7 @@ docker_push:
 
 gcloud_deploy:
 	docker push asia.gcr.io/alecsharpie/latentspacemuseum
-	gcloud run deploy --image asia.gcr.io/alecsharpie/latentspacemuseum \
+	gcloud run deploy latentspacemuseum --image asia.gcr.io/alecsharpie/latentspacemuseum \
 	--region asia-east1 \
 	--timeout=10m \
 	--memory 2Gi

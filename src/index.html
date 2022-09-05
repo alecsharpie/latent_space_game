@@ -27,12 +27,14 @@
 
 
 <body>
-    <div class="container-fluid">
-        <div class="title-container">
+    <div class="row">
+        <div id="title-container" class="col-12">
             <h1>Latent Space Museum</h1>
         </div>
-        <div class="row">
-            <div class="col-2">
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div id="game_control_container">
                 <div>
                     <label for="avatar">Choose Avatar:</label>
                     <select id="avatar" name="avatar_selection">
@@ -54,7 +56,7 @@
                 <hr/>
                 <span>
                     <p>By</p>
-                    <a href="http://www.alecsharpie.me" target="_blank">www.alecsharpie.me</a>
+                    <a id="my-link" href="http://www.alecsharpie.me" target="_blank">www.alecsharpie.me</a>
 
                 </span>
                 <hr/>
@@ -68,9 +70,9 @@
                     <p>I will update this with the Stable Diffusion Beta dataset when it's released :)</p>
                 </div>
             </div>
-            <div class="col-10">
-                <div id="game_canvas_container">
-                </div>
+        </div>
+        <div class="col-9">
+            <div id="game_canvas_container">
             </div>
         </div>
     </div>
