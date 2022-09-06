@@ -70,7 +70,14 @@ function createGame() {
     var map_data;
 
     // var platforms;
+
     var cursors;
+    var u_key;
+    var d_key;
+    var l_key;
+    var r_key;
+    var pointer;
+
     var player;
     var player_map;
 
@@ -214,10 +221,24 @@ function createGame() {
 
         // this.input.enabled = enabled;
 
-        this.input.keyboard.removeAllKeys(true);
+        // this.input.keyboard.removeAllKeys(true);
 
         cursors = this.input.keyboard.createCursorKeys();
 
+        pointer = this.input.activePointer;
+
+        // var keys = scene.input.keyboard.addKeys('W,S,A,D');  // keys.W, keys.S, keys.A, keys.D
+
+        // u_key = this.input.keyboard.addKeys('W');
+        // d_key = this.input.keyboard.addKeys('S');
+        // l_key = this.input.keyboard.addKeys('A');
+        // r_key = this.input.keyboard.addKeys('D');
+
+
+        // u_key.enabled = true;
+        // d_key.enabled = true;
+        // l_key.enabled = true;
+        // r_key.enabled = true;
 
         // Follow cursor
 
@@ -371,7 +392,67 @@ function createGame() {
 
     function update() {
 
-        // Diagonal movement
+        // individual keys
+
+        // // Up and left
+        // if (l_key.isDown && u_key.isDown) {
+        //     player.setVelocityX(-speedDiag);
+        //     player.setVelocityY(-speedDiag);
+        //     player.anims.play('back_' + name_of_sprite, true);
+
+        //     // Up and right
+        // } else if (r_key.isDown && u_key.isDown) {
+        //     player.setVelocityX(speedDiag);
+        //     player.setVelocityY(-speedDiag);
+        //     player.anims.play('back_' + name_of_sprite, true);
+
+        //     // Down and right
+        // } else if (r_key.isDown && d_key.isDown) {
+        //     player.setVelocityX(speedDiag);
+        //     player.setVelocityY(speedDiag);
+        //     player.anims.play('forward_' + name_of_sprite, true);
+
+        //     // Down and left
+        // } else if (l_key.isDown && d_key.isDown) {
+        //     player.setVelocityX(-speedDiag);
+        //     player.setVelocityY(speedDiag);
+        //     player.anims.play('forward_' + name_of_sprite, true);
+
+        //     //  Horizontal Movement
+
+        // } else if (l_key.isDown) {
+
+        //     player.setVelocityX(-speed);
+        //     player.setVelocityY(0);
+        //     player.anims.play('left_' + name_of_sprite, true);
+
+        // } else if (r_key.isDown) {
+        //     player.setVelocityX(speed);
+        //     player.setVelocityY(0);
+        //     player.anims.play('right_' + name_of_sprite, true);
+
+        //     //  Vertical Movement
+
+        // } else if (u_key.isDown) {
+        //     player.setVelocityY(-speed);
+        //     player.setVelocityX(0);
+        //     player.anims.play('back_' + name_of_sprite, true);
+
+        // } else if (d_key.isDown) {
+        //     player.setVelocityY(speed);
+        //     player.setVelocityX(0);
+        //     player.anims.play('forward_' + name_of_sprite, true);
+
+        // } else {
+
+        //     player.body.setVelocity(0);
+        //     player.anims.play('turn_' + name_of_sprite, true);
+
+        // }
+
+        // with cursors
+
+        // // Diagonal movement
 
         // Up and left
         if (cursors.left.isDown && cursors.up.isDown) {
@@ -422,12 +503,41 @@ function createGame() {
             player.setVelocityX(0);
             player.anims.play('forward_' + name_of_sprite, true);
 
+
+        } else if (pointer.isDown) {
+
+            // x: pointer.worldX,
+            // y: pointer.worldY
+
+
+            this.physics.moveToObject(player, { x: pointer.worldX, y: pointer.worldY }, 500)
+                // var touchX = pointer.x;
+                // var touchY = pointer.y;
         } else {
 
-            player.body.setVelocity(0);
+            player.body.setVelocity(0)
             player.anims.play('turn_' + name_of_sprite, true);
 
         }
+
+
+
+
+        //     if (player.body.velocity.x > 0) {
+        //         player.body.setVelocityX(player.body.velocity.x - 50);
+        //     } else {
+        //         player.body.setVelocityX(player.body.velocity.x + 50);
+        //     }
+
+
+        //     if (player.body.velocity.y > 0) {
+        //         player.body.setVelocityY(player.body.velocity.y - 50);
+        //     } else {
+        //         player.body.setVelocityY(player.body.velocity.y + 50);
+        //     }
+        //     player.anims.play('turn_' + name_of_sprite, true);
+
+        // }
 
 
         // if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
