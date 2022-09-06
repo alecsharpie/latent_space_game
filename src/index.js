@@ -18,13 +18,15 @@ var name_of_world;
 
 function createGame() {
 
-    document.getElementById('game_canvas_container').innerHTML = "";
+    document.getElementById("game_canvas_container").innerHTML = "";
 
     let avatar = document.getElementById('avatar').value;
     let world = document.getElementById('world').value;
 
     console.log(avatar)
     console.log(world)
+
+    // document.getElementById("game_canvas_container").focus();
 
     var config = {
         parent: game_canvas_container,
@@ -55,17 +57,22 @@ function createGame() {
     var game = new Phaser.Game(config);
 
     var score = 0;
-    var hiscore;
+    // var hiscore;
     var scoreText;
-    var hiscoreText;
+    // var hiscoreText;
     var clueText;
 
     var speed = 500;
     var speedDiag = Math.round(speed * (1 / 1.44));
 
-    var goal;
+    // var goal;
 
     var map_data;
+
+    // var platforms;
+    var cursors;
+    var player;
+    var player_map;
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
@@ -173,11 +180,6 @@ function createGame() {
             });
     }
 
-    // var platforms;
-    var cursors;
-    var player;
-    var player_map;
-
 
     // var name_of_sprite = 'fire_wizard';
     // var name_of_sprite = avatar;
@@ -210,7 +212,18 @@ function createGame() {
 
         player.body.setCollideWorldBounds(true);
 
+        // this.input.enabled = enabled;
+
+        this.input.keyboard.removeAllKeys(true);
+
         cursors = this.input.keyboard.createCursorKeys();
+
+
+        // Follow cursor
+
+        // this.input.on('pointerdown', function(pointer) {
+        //     this.physics.moveToObject(player, { x: pointer.worldX, y: pointer.worldY }, 500);
+        // }, this);
 
         // Clue & Goal
 
@@ -299,11 +312,7 @@ function createGame() {
         this.minimap.ignore(player);
 
 
-        // Follow cursor
 
-        // this.input.on('pointerdown', function(pointer) {
-        //     this.physics.moveToObject(player, { x: pointer.worldX, y: pointer.worldY }, 240);
-        // }, this);
 
         // Animations
 
@@ -362,68 +371,72 @@ function createGame() {
 
     function update() {
 
-        player.body.setVelocity(0);
-        // player.anims.play('turn_' + name_of_sprite, true);
-
-        //  Horizontal Movement
-
-        if (cursors.left.isDown) {
-
-            player.setVelocityX(-speed);
-            player.anims.play('left_' + name_of_sprite, true);
-        }
-
-        if (cursors.right.isDown) {
-            player.setVelocityX(speed);
-            player.anims.play('right_' + name_of_sprite, true);
-        }
-
-        //  Vertical Movement
-
-        if (cursors.up.isDown) {
-            player.setVelocityY(-speed);
-            player.anims.play('back_' + name_of_sprite, true);
-        }
-
-        if (cursors.down.isDown) {
-            player.setVelocityY(speed);
-            player.anims.play('forward_' + name_of_sprite, true);
-        }
-
         // Diagonal movement
-        // Up and left
 
+        // Up and left
         if (cursors.left.isDown && cursors.up.isDown) {
             player.setVelocityX(-speedDiag);
             player.setVelocityY(-speedDiag);
             player.anims.play('back_' + name_of_sprite, true);
-        }
 
-        // Up and right
-        if (cursors.right.isDown && cursors.up.isDown) {
+            // Up and right
+        } else if (cursors.right.isDown && cursors.up.isDown) {
             player.setVelocityX(speedDiag);
             player.setVelocityY(-speedDiag);
             player.anims.play('back_' + name_of_sprite, true);
-        }
 
-        // Down and right
-        if (cursors.right.isDown && cursors.down.isDown) {
+            // Down and right
+        } else if (cursors.right.isDown && cursors.down.isDown) {
             player.setVelocityX(speedDiag);
             player.setVelocityY(speedDiag);
             player.anims.play('forward_' + name_of_sprite, true);
-        }
 
-        // Down and left
-        if (cursors.left.isDown && cursors.down.isDown) {
+            // Down and left
+        } else if (cursors.left.isDown && cursors.down.isDown) {
             player.setVelocityX(-speedDiag);
             player.setVelocityY(speedDiag);
             player.anims.play('forward_' + name_of_sprite, true);
+
+            //  Horizontal Movement
+
+        } else if (cursors.left.isDown) {
+
+            player.setVelocityX(-speed);
+            player.setVelocityY(0);
+            player.anims.play('left_' + name_of_sprite, true);
+
+        } else if (cursors.right.isDown) {
+            player.setVelocityX(speed);
+            player.setVelocityY(0);
+            player.anims.play('right_' + name_of_sprite, true);
+
+            //  Vertical Movement
+
+        } else if (cursors.up.isDown) {
+            player.setVelocityY(-speed);
+            player.setVelocityX(0);
+            player.anims.play('back_' + name_of_sprite, true);
+
+        } else if (cursors.down.isDown) {
+            player.setVelocityY(speed);
+            player.setVelocityX(0);
+            player.anims.play('forward_' + name_of_sprite, true);
+
+        } else {
+
+            player.body.setVelocity(0);
+            player.anims.play('turn_' + name_of_sprite, true);
+
         }
+
 
         // if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
         //     player.body.setVelocity(0);
         //     player.anims.play('turn_' + name_of_sprite, true);
         // }
+
+
+
 
 
         player_map.body.x = player.body.x - 320
