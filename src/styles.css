@@ -9,11 +9,11 @@
 
 #mobile_warning_container {
     display: none;
-    text-align: center;
-    width: 100%;
-    margin: 5px 5px 5px 10px;
+    /* text-align: center;
+    width: 66%;
+    margin: 50px 50px 50px 50px;
     padding: 10px;
-    border: 1px solid black;
+    border: 1px solid black; */
 }
 
 #game_control_container {
@@ -28,17 +28,17 @@
 @media screen and (max-width: 849px) {
     #game_control_container {
         display: none;
-        text-align: center;
+        /* text-align: center;
         width: 100%;
         margin: 5px 5px 5px 10px;
         padding: 10px;
-        border: 1px solid black;
+        border: 1px solid black; */
     }
     #mobile_warning_container {
         display: block;
         text-align: center;
-        width: 100%;
-        margin: 5px 5px 5px 10px;
+        width: 80%;
+        margin: 20px 20px 20px 20px;
         padding: 10px;
         border: 1px solid black;
     }
