@@ -1,26 +1,13 @@
-# Explore Latent Space in this 2D way-finding game
+# Explore Text-to-image Generated Images in this 2D Museum
+
+This HTML5 game is built with the javascript library Phaser 3. It is served using the FastAPI framework housed in a Docker container. The assets are in a Storage Bucket.
 
 ## Based on Phaser 3 Webpack Project Template
-[github repo here](https://github.com/photonstorm/phaser3-project-template)
+[Project Template Repository](https://github.com/photonstorm/phaser3-project-template)
 
-## Requirements
+## This is the frontend for some game assets I created here
+[Game Asset Creation](https://github.com/alecsharpie/game_asset_creation)
 
-[Node.js](https://nodejs.org) is required to install dependencies and run scripts via `npm`.
+---
 
-## Available Commands
-
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install project dependencies |
-| `npm start` | Build project and open web server running project (`http://localhost:8080`) |
-| `npm run build` | Builds code bundle with production settings (minification, uglification, etc..) (`dist/bundle.min.js`) |
-
-### Babel
-
- ```
-"browsers": [
-  ">0.25%",
-  "not ie 11",
-  "not op_mini all"
-]
- ```
+Includes a make file for building, running, and deploying

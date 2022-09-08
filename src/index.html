@@ -44,45 +44,48 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <div id="mobile_warning_container">
-                <p>Sorry, this doesn't work on mobile yet.</p>
-            </div>
             <div id="game_control_container">
                 <div>
                     <label for="avatar">Choose Character:</label>
                     <select id="avatar" name="avatar_selection">
                       <option value="fire_wizard">Fire Wizard</option>
                       <option value="leafy_druid">Leafy Druid</option>
+                      <option value="jellyfish_astronaut">Jellyfish Astronaut</option>
+                      <option value="mark_zuckerberg">Mark Zuckerberg</option>
+                      <option value="crungus">Crungus</option>
                     </select>
                 </div>
                 <div>
                     <label for="world">Choose Map:</label>
                     <select id="world" name="world_selection">
-                      <option value="colour_coords">Colour Map</option>
-                      <option value="image_coords">CLIP Map</option>
+                      <option value="colour_coords">Organised by Colour</option>
+                      <option value="image_coords">Organised by CLIP</option>
                     </select>
                 </div>
                 <br/>
+                <div id="mobile_warning_container">
+                    <p>Sorry, this doesn't work on mobile yet.</p>
+                </div>
                 <div>
                     <button id="playButton">ENTER</button>
                 </div>
                 <br/>
                 <div>
                     <p>Player follows your clicked
-                        <b> Mouse </b>, further away = faster. Or use the
+                        <b> Mouse</b>, further away means more speed. Or, use the
                         <b> Arrow keys </b> to control your player.
                     </p>
                 </div>
                 <hr/>
                 <div>
-                    <p>Colour Map - frequencies of a selected palette, first 2 principal components.
+                    <p>Colour Map - Frequencies of a selected palette, first 2 principal components.
                     </p>
                     <p>Clip Map - CLIP ViT-L/14 image embeddings, reduced using minimum distortion embedding.
                     </p>
                 </div>
                 <br/>
                 <div>
-                    <p>Filtered-ish for NSFW, however some images contain mature themes.</p>
+                    <p>Filtered-ish for NSFW, however some images contain mature content.</p>
                 </div>
                 <br/>
                 <div>
