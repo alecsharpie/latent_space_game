@@ -182,19 +182,6 @@ function createGame() {
         this.load.image('goal', 'assets/goal.png');
         this.load.image('background', 'assets/latent_space_background_8bit.png');
 
-        // this.load.spritesheet(
-        //     'leafy_druid',
-        //     'assets/leafy_druid_spritesheet_transparent.png', {
-        //         frameWidth: 64,
-        //         frameHeight: 64
-        //     });
-        // this.load.spritesheet(
-        //     'fire_wizard',
-        //     'assets/fire_wizard_spritesheet_transparent.png', {
-        //         frameWidth: 64,
-        //         frameHeight: 64
-        //     });
-
         var char_list = ['fire_wizard', 'leafy_druid', 'jellyfish_astronaut', 'mark_zuckerberg', 'crungus'];
 
         for (var i = 0; i < char_list.length; i++) {
@@ -206,10 +193,6 @@ function createGame() {
                 });
 
         }
-
-
-
-        // ['fire_wizard', 'leafy_druid', 'jellyfish_astronaut', 'mark_zuckerberg', 'crungus']
     }
 
     function create() {
@@ -335,55 +318,7 @@ function createGame() {
         this.minimap.ignore(player);
 
 
-
-
         // Animations
-
-
-        // this.anims.create({
-        //     key: 'forward_' + name_of_sprite,
-        //     frames: this.anims.generateFrameNumbers(name_of_sprite, {
-        //         frames: [0, 1, 2]
-        //     }),
-        //     frameRate: 12,
-        //     repeat: -1
-        // });
-
-        // this.anims.create({
-        //     key: 'left_' + name_of_sprite,
-        //     frames: this.anims.generateFrameNumbers(name_of_sprite, {
-        //         frames: [4, 5, 6]
-        //     }),
-        //     frameRate: 12,
-        //     repeat: -1
-        // });
-
-        // this.anims.create({
-        //     key: 'right_' + name_of_sprite,
-        //     frames: this.anims.generateFrameNumbers(name_of_sprite, {
-        //         frames: [8, 9, 10]
-        //     }),
-        //     frameRate: 12,
-        //     repeat: -1
-        // });
-
-        // this.anims.create({
-        //     key: 'back_' + name_of_sprite,
-        //     frames: this.anims.generateFrameNumbers(name_of_sprite, {
-        //         frames: [12, 13, 14]
-        //     }),
-        //     frameRate: 12,
-        //     repeat: -1
-        // });
-
-        // this.anims.create({
-        //     key: 'turn_' + name_of_sprite,
-        //     frames: this.anims.generateFrameNumbers(name_of_sprite, {
-        //         frames: [1]
-        //     }),
-        //     frameRate: 12
-        // });
-
 
         var char_list = ['fire_wizard', 'leafy_druid', 'jellyfish_astronaut', 'mark_zuckerberg', 'crungus'];
 

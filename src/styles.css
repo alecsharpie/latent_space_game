@@ -59,7 +59,7 @@ body {
 }
 
 select {
-    padding: 2px;
+    padding: 3px;
     margin: 3px;
     font-weight: bold;
 }
