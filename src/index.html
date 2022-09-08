@@ -49,7 +49,7 @@
             </div>
             <div id="game_control_container">
                 <div>
-                    <label for="avatar">Choose Avatar:</label>
+                    <label for="avatar">Choose Character:</label>
                     <select id="avatar" name="avatar_selection">
                       <option value="fire_wizard">Fire Wizard</option>
                       <option value="leafy_druid">Leafy Druid</option>
@@ -62,32 +62,47 @@
                       <option value="image_coords">CLIP Map</option>
                     </select>
                 </div>
+                <br/>
                 <div>
-                    <br>
                     <button id="playButton">ENTER</button>
                 </div>
+                <br/>
                 <div>
-                    <p>Use the Arrow keys to move</p>
+                    <p>Player follows your clicked
+                        <b> Mouse </b>, further away = faster. Or use the
+                        <b> Arrow keys </b> to control your player.
+                    </p>
                 </div>
                 <hr/>
-                <span>
-                    <p>By</p>
-                    <a id="my-link" href="http://www.alecsharpie.me" target="_blank">www.alecsharpie.me</a>
-                    <a id="my-link" href="https://twitter.com/ai_for_humans" target="_blank">@ai_for_humans</a>
-                </span>
-                <hr/>
+                <div>
+                    <p>Colour Map - frequencies of a selected palette, first 2 principal components.
+                    </p>
+                    <p>Clip Map - CLIP ViT-L/14 image embeddings, reduced using minimum distortion embedding.
+                    </p>
+                </div>
+                <br/>
+                <div>
+                    <p>Filtered-ish for NSFW, however some images contain mature themes.</p>
+                </div>
+                <br/>
                 <div>
                     <p>I will update this with the Stable Diffusion Beta dataset when it's released :)</p>
                 </div>
                 <hr/>
-                <span>
+                <div>
+                    <p>Created by</p>
+                    <a id="my-link" href="http://www.alecsharpie.me" target="_blank">www.alecsharpie.me</a>
+                    <a id="my-link" href="https://twitter.com/ai_for_humans" target="_blank">@ai_for_humans</a>
+                </div>
+                <br/>
+                <div>
                     <p>Dataset from</p>
                     <a href="https://github.com/JD-P/simulacra-aesthetic-captions" target="_blank">JD-P/simulacra-aesthetic-captions</a>
-                </span>
-                <span>
+                </div>
+                <div>
                     <p>Assets from</p>
                     <a href="https://twitter.com/KaliYuga_ai" target="_blank">KaliYuga_ai's Diffusion Models</a>
-                </span>
+                </div>
                 <hr/>
                 <div>
                     <div data-tf-widget="axgn0PqQ" data-tf-opacity="0" data-tf-iframe-props="title=latentspacemuseum_feedback" data-tf-medium="snippet" data-tf-disable-auto-focus style="width:100%;height:400px;"></div>

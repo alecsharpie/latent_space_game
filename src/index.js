@@ -56,26 +56,21 @@ function createGame() {
 
     var game = new Phaser.Game(config);
 
-    var score = 0;
+    // var score = 0;
     // var hiscore;
-    var scoreText;
+    // var scoreText;
     // var hiscoreText;
-    var clueText;
+    // var clueText;
 
     var speed = 500;
     var speedDiag = Math.round(speed * (1 / 1.44));
 
     // var goal;
+    // var platforms;
 
     var map_data;
 
-    // var platforms;
-
     var cursors;
-    var u_key;
-    var d_key;
-    var l_key;
-    var r_key;
     var pointer;
 
     var player;
@@ -201,10 +196,6 @@ function createGame() {
             });
     }
 
-
-    // var name_of_sprite = 'fire_wizard';
-    // var name_of_sprite = avatar;
-
     function create() {
 
         console.log('Creating game...')
@@ -238,32 +229,9 @@ function createGame() {
 
         player.body.setCollideWorldBounds(true);
 
-        // this.input.enabled = enabled;
-
-        // this.input.keyboard.removeAllKeys(true);
-
         cursors = this.input.keyboard.createCursorKeys();
 
         pointer = this.input.activePointer;
-
-        // var keys = scene.input.keyboard.addKeys('W,S,A,D');  // keys.W, keys.S, keys.A, keys.D
-
-        // u_key = this.input.keyboard.addKeys('W');
-        // d_key = this.input.keyboard.addKeys('S');
-        // l_key = this.input.keyboard.addKeys('A');
-        // r_key = this.input.keyboard.addKeys('D');
-
-
-        // u_key.enabled = true;
-        // d_key.enabled = true;
-        // l_key.enabled = true;
-        // r_key.enabled = true;
-
-        // Follow cursor
-
-        // this.input.on('pointerdown', function(pointer) {
-        //     this.physics.moveToObject(player, { x: pointer.worldX, y: pointer.worldY }, 500);
-        // }, this);
 
         // Clue & Goal
 
@@ -304,10 +272,9 @@ function createGame() {
         // platforms = this.physics.add.staticGroup();
         // let edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0)
         // t_edge = platforms.create(0, 0, 'horz_edge').setOrigin(0, 0).setScale(10).refreshBody();
-        // // scale = map_size_pixels / edge.displayWidth
-        // // long_side = edge.displayWidth * scale
-        // // short_side = edge.displayHeight * scale
-        // // t_edge
+        // scale = map_size_pixels / edge.displayWidth
+        // long_side = edge.displayWidth * scale
+        // short_side = edge.displayHeight * scale
         // b_edge = platforms.create(0, bg.displayWidth - 50, 'horz_edge').setOrigin(0, 0).setScale(10).refreshBody();
         // l_edge = platforms.create(0, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
         // r_edge = platforms.create(bg.displayWidth - 50, 0, 'vert_edge').setOrigin(0, 0).setScale(10).refreshBody();
@@ -514,35 +481,6 @@ function createGame() {
 
         }
 
-
-
-
-        //     if (player.body.velocity.x > 0) {
-        //         player.body.setVelocityX(player.body.velocity.x - 50);
-        //     } else {
-        //         player.body.setVelocityX(player.body.velocity.x + 50);
-        //     }
-
-
-        //     if (player.body.velocity.y > 0) {
-        //         player.body.setVelocityY(player.body.velocity.y - 50);
-        //     } else {
-        //         player.body.setVelocityY(player.body.velocity.y + 50);
-        //     }
-        //     player.anims.play('turn_' + name_of_sprite, true);
-
-        // }
-
-
-        // if (!(cursors.left.isDown) && !(cursors.down.isDown) && !(cursors.right.isDown) && !(cursors.up.isDown)) {
-        //     player.body.setVelocity(0);
-        //     player.anims.play('turn_' + name_of_sprite, true);
-        // }
-
-
-
-
-
         player_map.body.x = player.body.x - 320
         player_map.body.y = player.body.y - 320
 
@@ -558,9 +496,6 @@ function createGame() {
     }
 
     function render() {
-
-        // this.debug.cameraInfo(this.camera, 32, 32);
-        // this.debug.spriteCoords(player, 32, 500);
 
     }
 

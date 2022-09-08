@@ -9,11 +9,6 @@
 
 #mobile_warning_container {
     display: none;
-    /* text-align: center;
-    width: 66%;
-    margin: 50px 50px 50px 50px;
-    padding: 10px;
-    border: 1px solid black; */
 }
 
 #game_control_container {
@@ -28,11 +23,6 @@
 @media screen and (max-width: 849px) {
     #game_control_container {
         display: none;
-        /* text-align: center;
-        width: 100%;
-        margin: 5px 5px 5px 10px;
-        padding: 10px;
-        border: 1px solid black; */
     }
     #mobile_warning_container {
         display: block;
@@ -44,41 +34,18 @@
     }
 }
 
-
-/* #game_control_container {
-    text-align: center;
-    width: 100%;
-    /* height: 600px; */
-
-
-/* margin: 5px 5px 5px 10px; */
-
-
-/* padding: 10px; */
-
-
-/* margin: auto; */
-
-
-/* border: 1px solid black; */
-
-
-/* background-color: white; */
-
-
-/* } */
-
-
-/* #title-container {
-    background-image: url("https://storage.googleapis.com/latentspacemuseum/assets/nav_bg.png");
-} */
-
 h1 {
     color: white;
     padding-left: 10px;
     font-size: 72px;
     /* text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black; */
     text-shadow: 1px 1px #00629e, 2px 2px #387777, 3px 3px #6F8B50, 4px 4px #A7A028, 5px 5px #deb401, 6px 6px #E39702, 7px 7px #E97A03, 8px 8px #EE5C04, 9px 9px #f33f05;
+}
+
+h4 {
+    color: white;
+    padding-left: 10px;
+    text-align: left;
 }
 
 body {
@@ -93,18 +60,6 @@ body {
     background: linear-gradient(-90deg, #f33f05, #deb401, #00629e);
     /* Standard syntax (must be last) */
 }
-
-
-/* .col-3 { */
-
-
-/* border: 1px solid black; */
-
-
-/* padding: 10px; */
-
-
-/* } */
 
 #playButton {
     border: 1px solid black;
@@ -170,11 +125,3 @@ p {
     margin: 0px;
     font-size: 1em;
 }
-
-
-/* #my-link {
-    color: #ffffff;
-    padding: 5px;
-    margin: 0px;
-    font-size: 1.2em;
-} */
