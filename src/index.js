@@ -182,7 +182,7 @@ function createGame() {
         this.load.image('goal', 'assets/goal.png');
         this.load.image('background', 'assets/latent_space_background_8bit.png');
 
-        var char_list = ['fire_wizard', 'leafy_druid', 'jellyfish_astronaut', 'mark_zuckerberg', 'crungus'];
+        var char_list = ['fire_wizard', 'leafy_druid', 'jellyfish_astronaut', 'bean_and_cheese', 'mark_zuckerberg', 'crungus'];
 
         for (var i = 0; i < char_list.length; i++) {
             this.load.spritesheet(
@@ -320,7 +320,7 @@ function createGame() {
 
         // Animations
 
-        var char_list = ['fire_wizard', 'leafy_druid', 'jellyfish_astronaut', 'mark_zuckerberg', 'crungus'];
+        var char_list = ['fire_wizard', 'leafy_druid', 'jellyfish_astronaut', 'bean_and_cheese', 'mark_zuckerberg', 'crungus'];
 
         for (var i = 0; i < char_list.length; i++) {
 
