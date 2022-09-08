@@ -411,93 +411,101 @@ function createGame() {
 
     function update() {
 
-        // with cursors
+        // Diagonal movement
 
-        // // Diagonal movement
+        // Up and left
+        if (cursors.left.isDown && cursors.up.isDown) {
+            player.setVelocityX(-speedDiag);
+            player.setVelocityY(-speedDiag);
+            player.anims.play('back_' + name_of_sprite, true);
 
-        // // Up and left
-        // if (cursors.left.isDown && cursors.up.isDown) {
-        //     player.setVelocityX(-speedDiag);
-        //     player.setVelocityY(-speedDiag);
-        //     player.anims.play('back_' + name_of_sprite, true);
+            // Up and right
+        } else if (cursors.right.isDown && cursors.up.isDown) {
+            player.setVelocityX(speedDiag);
+            player.setVelocityY(-speedDiag);
+            player.anims.play('back_' + name_of_sprite, true);
 
-        //     // Up and right
-        // } else if (cursors.right.isDown && cursors.up.isDown) {
-        //     player.setVelocityX(speedDiag);
-        //     player.setVelocityY(-speedDiag);
-        //     player.anims.play('back_' + name_of_sprite, true);
+            // Down and right
+        } else if (cursors.right.isDown && cursors.down.isDown) {
+            player.setVelocityX(speedDiag);
+            player.setVelocityY(speedDiag);
+            player.anims.play('forward_' + name_of_sprite, true);
 
-        //     // Down and right
-        // } else if (cursors.right.isDown && cursors.down.isDown) {
-        //     player.setVelocityX(speedDiag);
-        //     player.setVelocityY(speedDiag);
-        //     player.anims.play('forward_' + name_of_sprite, true);
+            // Down and left
+        } else if (cursors.left.isDown && cursors.down.isDown) {
+            player.setVelocityX(-speedDiag);
+            player.setVelocityY(speedDiag);
+            player.anims.play('forward_' + name_of_sprite, true);
 
-        //     // Down and left
-        // } else if (cursors.left.isDown && cursors.down.isDown) {
-        //     player.setVelocityX(-speedDiag);
-        //     player.setVelocityY(speedDiag);
-        //     player.anims.play('forward_' + name_of_sprite, true);
+            //  Horizontal Movement
 
-        //     //  Horizontal Movement
+        } else if (cursors.left.isDown) {
 
-        // } else if (cursors.left.isDown) {
+            player.setVelocityX(-speed);
+            player.setVelocityY(0);
+            player.anims.play('left_' + name_of_sprite, true);
 
-        //     player.setVelocityX(-speed);
-        //     player.setVelocityY(0);
-        //     player.anims.play('left_' + name_of_sprite, true);
+        } else if (cursors.right.isDown) {
+            player.setVelocityX(speed);
+            player.setVelocityY(0);
+            player.anims.play('right_' + name_of_sprite, true);
 
-        // } else if (cursors.right.isDown) {
-        //     player.setVelocityX(speed);
-        //     player.setVelocityY(0);
-        //     player.anims.play('right_' + name_of_sprite, true);
+            //  Vertical Movement
 
-        //     //  Vertical Movement
+        } else if (cursors.up.isDown) {
+            player.setVelocityY(-speed);
+            player.setVelocityX(0);
+            player.anims.play('back_' + name_of_sprite, true);
 
-        // } else if (cursors.up.isDown) {
-        //     player.setVelocityY(-speed);
-        //     player.setVelocityX(0);
-        //     player.anims.play('back_' + name_of_sprite, true);
-
-        // } else if (cursors.down.isDown) {
-        //     player.setVelocityY(speed);
-        //     player.setVelocityX(0);
-        //     player.anims.play('forward_' + name_of_sprite, true);
+        } else if (cursors.down.isDown) {
+            player.setVelocityY(speed);
+            player.setVelocityX(0);
+            player.anims.play('forward_' + name_of_sprite, true);
 
 
-        // } else
+        } else if (pointer.isDown) {
 
-        if (pointer.isDown) {
+            var x_diff = pointer.worldX - player.body.x;
+            var y_diff = pointer.worldY - player.body.y;
 
-            // player.setVelocityX(pointer.worldX - player.body.x);
-            // player.setVelocityY(pointer.worldY - player.body.y);
+            if (prev_pointer_x != pointer.worldX) {
+                player.setVelocityX((pointer.worldX - player.body.x) * 5);
 
-            // if (prev_pointer_x != pointer.worldX) {
-            //     player.setVelocityX((pointer.worldX - player.body.x) * 5);
-            // }
-            // if (prev_pointer_y != pointer.worldY) {
-            //     player.setVelocityY((pointer.worldY - player.body.y) * 5);
-            // }
 
-            var x_velocity = (pointer.worldX - player.body.x) * 5
-            if (player.body.velocity.x != x_velocity) {
-                player.setVelocityX(x_velocity);
+                if (Math.abs(y_diff) > Math.abs(x_diff) && y_diff > 0) {
+                    player.anims.play('back_' + name_of_sprite, true);
+
+                } else if (Math.abs(y_diff) > Math.abs(x_diff) && y_diff < 0) {
+                    player.anims.play('forward_' + name_of_sprite, true);
+
+                } else if (Math.abs(y_diff) < Math.abs(x_diff) && x_diff < 0) {
+                    player.anims.play('left_' + name_of_sprite, true);
+
+                } else if (Math.abs(y_diff) < Math.abs(x_diff) && x_diff > 0) {
+                    player.anims.play('right_' + name_of_sprite, true);
+
+                }
             }
 
-            var y_velocity = (pointer.worldY - player.body.y) * 5
-            if (player.body.velocity.y != y_velocity) {
-                player.setVelocityY(y_velocity);
+            if (prev_pointer_y != pointer.worldY) {
+                player.setVelocityY((pointer.worldY - player.body.y) * 5);
+
+                if (Math.abs(y_diff) > Math.abs(x_diff) && y_diff < 0) {
+                    player.anims.play('back_' + name_of_sprite, true);
+
+                } else if (Math.abs(y_diff) > Math.abs(x_diff) && y_diff > 0) {
+                    player.anims.play('forward_' + name_of_sprite, true);
+
+                } else if (Math.abs(y_diff) < Math.abs(x_diff) && x_diff < 0) {
+                    player.anims.play('left_' + name_of_sprite, true);
+
+                } else if (Math.abs(y_diff) < Math.abs(x_diff) && x_diff > 0) {
+                    player.anims.play('right_' + name_of_sprite, true);
+
+                }
             }
-
-            // prev_pointer_x = pointer.worldX
-            // prev_pointer_y = pointer.worldY
-
-            // Here i need to implement movement and animation depending on click relative to player
-
-
-            // this.physics.moveToObject(player, { x: pointer.worldX, y: pointer.worldY }, 500)
-            // var touchX = pointer.x;
-            // var touchY = pointer.y;
+            prev_pointer_x = pointer.worldX
+            prev_pointer_y = pointer.worldY
 
         } else {
 
